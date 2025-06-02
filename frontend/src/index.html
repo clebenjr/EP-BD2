@@ -1,20 +1,69 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="UTF-8" />
+  <title>Visualizar Conflitos</title>
+  <link rel="stylesheet" href="css/visualizar.css" />
 </head>
 <body>
-    <header>
-        <img src="imagens/logo-onu.png" alt="Logo da ONU">
-        <h1>Bem-vindo!</h1>
-    </header>
-    <nav>
-        <menu>
-            <li>Visualizar</li>
-            <li>Cadastrar</li>
-        </menu>
-    </nav>
+  <header>
+    <h1>Bem-vindo!</h1>
+  </header>
+
+  <nav>
+    <a href="index.html" class="active">Visualizar</a>
+    <a href="cadastrar.html">Cadastrar</a>
+  </nav>
+
+  <main class="grid">
+    <section class="card chart">
+      <h2>Tipo de conflito mais recorrente</h2>
+      <img src="https://via.placeholder.com/300x200?text=Gráfico" alt="Gráfico de conflitos">
+    </section>
+
+    <section class="card dark">
+      <h2>Traficantes e Grupos Armados</h2>
+      <table>
+        <tr><th>Traficante</th><th>Grupo Armado</th></tr>
+        <tr><td>Fernandinho Beira-Mar</td><td>Hamas</td></tr>
+        <tr><td>Marcola</td><td>PCC</td></tr>
+        <tr><td>Walter White</td><td>Comando do Crack</td></tr>
+      </table>
+    </section>
+
+    <section class="card green">
+      <h2>Grupos Armados com mais armas fornecidas</h2>
+      <table>
+        <tr><th>Nome</th><th>Quantidade de Arma Fornecido</th></tr>
+        <tr><td>Hamas</td><td>3.150</td></tr>
+        <tr><td>Comando do Crack</td><td>115.003</td></tr>
+      </table>
+    </section>
+
+    <section class="card dark">
+      <h2>Maiores conflitos em número de mortos</h2>
+      <table>
+        <tr><th>Conflito</th><th>Nmº de mortes</th><th>Nmº de feridos</th></tr>
+        <tr><td>Guerra do Vietnã</td><td>114.000</td><td>500.000</td></tr>
+        <tr><td>Paquistão vs Índia</td><td>23</td><td>201</td></tr>
+      </table>
+    </section>
+
+    <section class="card dark">
+      <h2>Maiores organizações em mediações</h2>
+      <table>
+        <tr><th>Nome</th><th>Tipo</th><th>Número</th></tr>
+        <tr><td>DASI USP</td><td>Internacional</td><td>1.000.000.000.000</td></tr>
+        <tr><td>Síntese Jr.</td><td>Governamental</td><td>356</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>País com mais conflitos religiosos</h2>
+      <p>Azerbaijão, 5 conflitos</p>
+    </section>
+  </main>
+
+  <script src="js/visualizar.js"></script>
 </body>
 </html>
