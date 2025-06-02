@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Conflito</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      background-color: #a2a68a;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #ccc;
+    }
+
+    header img {
+      width: 50px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0 10px;
+      font-size: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: black;
+      padding-bottom: 4px;
+    }
+
+    nav a.active {
+      font-weight: bold;
+      border-bottom: 3px solid #7a911e;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    select,
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #e3e8cc;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+
+    .add-type {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .add-type span {
+      margin-left: 8px;
+      font-size: 20px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #7a911e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #6c811a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Você pode adicionar o logo da ONU aqui -->
+    <!-- <img src="logo.png" alt="Logo" /> -->
+    <h1>Bem-vindo!</h1>
+  </header>
+
+  <nav>
+    <a href="#">Visualizar</a>
+    <a href="#" class="active">Cadastrar</a>
+  </nav>
+
+  <div class="container">
+    <label for="tipo">Adicionar:</label>
+    <select id="tipo">
+      <option>Conflito Bélico</option>
+    </select>
+
+    <label for="nome">Nome:*</label>
+    <input type="text" id="nome" placeholder="Digite o nome do conflito" />
+
+    <label for="mortos">Número de Mortos:*</label>
+    <input type="number" id="mortos" placeholder="Digite o número de mortos" />
+
+    <label for="feridos">Número de Feridos:*</label>
+    <input type="number" id="feridos" placeholder="Digite o número de feridos" />
+
+    <div class="add-type" onclick="adicionarTipo()">
+      Adicionar Tipo de Conflito <span>＋</span>
+    </div>
+
+    <button class="btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+  </div>
+
+  <script>
+    function adicionarTipo() {
+      alert("Função para adicionar novo tipo de conflito.");
+    }
+
+    function adicionarConflito() {
+      const nome = document.getElementById("nome").value;
+      const mortos = document.getElementById("mortos").value;
+      const feridos = document.getElementById("feridos").value;
+
+      if (!nome || !mortos || !feridos) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      alert(`Conflito "${nome}" adicionado com sucesso!`);
+    }
+  </script>
+</body>
+</html>
