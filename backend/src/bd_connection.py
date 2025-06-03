@@ -18,11 +18,36 @@ class Banco:
         ) 
 
         self.cur = self.conn.cursor()
+
+        self.cur.execute("SET search_path TO ep2_bd2;")  
         
 
     
-    def busca(self):
-        self.cur.execute('SELECT * FROM teste LIMIT 10;')  # Substitua por sua tabela real
+    def busca_tabela(self):
+        self.cur.execute("""SELECT
+        'Por Região' AS TipoDeConflito,
+        COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
+        FROM
+            Regioes
+        UNION ALL
+        SELECT
+            'Por Matéria Prima' AS TipoDeConflito,
+            COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
+        FROM
+            Materias_Primas -- Presumindo que o nome da tabela seja "Materias_Primas" ou similar sem acentos/espaços. Ajuste se necessário.
+        UNION ALL
+        SELECT
+            'Por Religião' AS TipoDeConflito,
+            COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
+        FROM
+            religioes 
+        UNION ALL
+        SELECT
+            'Por Etnia' AS TipoDeConflito,
+            COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
+        FROM
+            Etnias;
+        """)  
         rows = self.cur.fetchall()
         return rows
     
