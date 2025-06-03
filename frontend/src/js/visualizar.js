@@ -7,7 +7,9 @@ new Chart(ctx, {
     datasets: [{
       label: 'Números de Conflitos',
       data: [2, 1, 0, 3],
-      borderWidth: 1
+      borderWidth: 1,
+      backgroundColor: '#7d9900',
+      borderColor: '#5f663e',
     }]
   },
   options: {
