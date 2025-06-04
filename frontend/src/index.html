@@ -28,9 +28,9 @@
       <table>
         <tr class="titulo-grande"><th colspan="2">Traficantes e Grupos Armados</th></tr>
         <tr class="titulo-menor"><th>Traficante</th><th>Grupo Armado</th></tr>
-        <tr><td>Fernandinho Beira-Mar</td><td>Hamas</td></tr>
-        <tr><td>Marcola</td><td>PCC</td></tr>
-        <tr><td>Walter White</td><td>Comando do Crack</td></tr>
+        {% for traficante_e_grupo in traficantes_e_grupos %}
+        <tr><td>{{ traficante_e_grupo[0] }}</td><td>{{ traficante_e_grupo[1] }}</td></tr>
+        {% endfor %}
       </table>
     </section>
 
@@ -38,8 +38,9 @@
       <table>
         <tr class="titulo-grande"><th colspan="2">Grupos Armados com mais armas fornecidas</th></tr>
         <tr class="titulo-menor"><th>Nome</th><th>Quantidade de Arma Fornecido</th></tr>
-        <tr><td>Hamas</td><td>3.150</td></tr>
-        <tr><td>Comando do Crack</td><td>115.003</td></tr>
+        {% for grupo_armado in grupos_armados %}
+        <tr><td>{{ grupo_armado[0] }}</td><td>{{ grupo_armado[1] }}</td></tr>
+        {% endfor %}
       </table>
     </section>
 
@@ -47,8 +48,9 @@
       <table>
         <tr class="titulo-grande"><th colspan="3">Maiores conflitos em número de mortos</th></tr>
         <tr class="titulo-menor"><th>Conflito</th><th>Nmº de mortes</th><th>Nmº de feridos</th></tr>
-        <tr><td>Guerra do Vietnã</td><td>114.000</td><td>500.000</td></tr>
-        <tr><td>Paquistão vs Índia</td><td>23</td><td>201</td></tr>
+        {% for conflito in maiores_conflitos %}
+        <tr><td>{{ conflito[0] }}</td><td>{{ conflito[1] }}</td><td>{{ conflito[2] }}</td></tr>
+        {% endfor %}  
       </table>
     </section>
 
@@ -56,14 +58,18 @@
       <table>
         <tr class="titulo-grande"><th colspan="3">Maiores organizações em mediações</th></tr>
         <tr class="titulo-menor"><th>Nome</th><th>Tipo</th><th>Número</th></tr>
-        <tr><td>DASI USP</td><td>Internacional</td><td>1.000.000.000.000</td></tr>
-        <tr><td>Síntese Jr.</td><td>Governamental</td><td>356</td></tr>
+        {% for org in organizacoes_mediadoras %}
+        <tr><td>{{ org[0] }}</td><td>{{ org[1] }}</td><td>{{ org[2] }}</td></tr>
+        {% endfor %} 
       </table>
     </section>
 
     <section class="card">
-      <h2>País com mais conflitos religiosos</h2>
-      <p>Azerbaijão, 5 conflitos</p>
+      <table>
+        <tr class="titulo-grande"><th colspan="2">País com mais conflitos religiosos</th></tr>
+        <tr class="titulo-menor"><th>País</th><th>Números de Conflitos</th></tr>
+        <tr><td>{{ pais[0][0] }}</td><td>{{ pais[0][1] }}</td></tr>
+      </table>
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

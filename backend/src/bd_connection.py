@@ -51,6 +51,100 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    def busca_traficantes_e_grupos_armados(self):
+        self.cur.execute("""
+                        SELECT DISTINCT
+                        t.nome AS NomeTraficante,
+                        ga.nome AS NomeGrupoArmado
+                        -- Você pode adicionar a.Tipo se quiser ver a arma específica
+                        -- , a.Tipo AS TipoArma
+                    FROM
+                        traficante t,
+                        grupo_armado ga,
+                        fornece f,
+                        arma a  -- Adicionar a tabela Arma
+                    WHERE
+                        -- Condições de Junção
+                        f.nome_traficante = t.nome AND
+                        f.id_grupo_armado = ga.id AND
+                        f.tipo_arma = a.tipo AND  -- Junção com a tabela Arma
+
+                        -- Condição de Filtragem nas armas
+                        (a.tipo = 'Barret M82' OR a.tipo = 'M200 intervention');
+                    """)
+        rows = self.cur.fetchall()
+        return rows
+    
+    def busca_maiores_conflitos(self):
+        self.cur.execute("""
+                        SELECT
+                            nome,
+                            numero_de_mortos, -- Se o nome da coluna tiver espaços, é preciso usar aspas (ou o delimitador específico do seu SGBD, como colchetes [] ou crases ``)
+                            numero_de_feridos
+                        FROM
+                            conflito
+                        ORDER BY
+                            numero_de_mortos DESC
+                        LIMIT 5;
+                    """)
+        rows = self.cur.fetchall()
+        return rows
+    
+    def busca_organizacoes_mediadoras(self):
+        self.cur.execute("""
+                        SELECT
+                            OM.nome AS NomeOrganizacao,
+                            OM.tipo as Tipo,
+                            COUNT(PO.Id_Organizacao) AS NumeroDeMediacoes
+                        FROM
+                            participa_organizacao PO
+                        INNER JOIN
+                            organizacao_mediadora OM ON PO.id_organizacao = OM.id
+                        GROUP BY
+                            OM.nome, OM.tipo -- ou PO.Id_Organizacao e OM.Nome, mas agrupar pelo nome é suficiente se o nome for único.
+                        ORDER BY
+                            NumeroDeMediacoes DESC
+                        LIMIT 5;
+                    """)
+        rows = self.cur.fetchall()
+        return rows
+    
+    def busca_grupos_armados(self):
+        self.cur.execute("""
+                        SELECT
+                            GA.nome AS NomeGrupoArmado,
+                            SUM(F.Quantidade) AS TotalArmasFornecidas
+                        FROM
+                            fornece F
+                        INNER JOIN
+                            grupo_armado GA ON F.id_grupo_armado = GA.id
+                        GROUP BY
+                            GA.nome -- ou GA.Id e GA.Nome, mas agrupar pelo nome é suficiente se o nome for único.
+                        ORDER BY
+                            TotalArmasFornecidas DESC
+                        LIMIT 5;
+                    """)
+        rows = self.cur.fetchall()
+        return rows
+    
+    def busca_pais(self):
+        self.cur.execute("""
+                        SELECT
+                            A.nome_pais,
+                            COUNT(DISTINCT R.id_conflito) AS NumeroDeConflitosReligiosos
+                        FROM
+                            afeta A
+                        INNER JOIN
+                            religioes R ON a.id_conflito = R.id_conflito
+                        GROUP BY
+                            A.nome_pais
+                        ORDER BY
+                            NumeroDeConflitosReligiosos DESC
+                        LIMIT 1;
+                    """)
+        rows = self.cur.fetchall()
+        return rows
+    
     def close(self):
         self.cur.close()
         self.conn.close()
