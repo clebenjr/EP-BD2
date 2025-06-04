@@ -37,24 +37,7 @@ Cadastrar Conflito
     </div>
     <div id="tipo-conflito-opcoes">
     </div>
-    <script>
-        function adicionarTipo() {
-            const opcoesDiv = document.getElementById('tipo-conflito-opcoes');
-            const novoCampo = document.createElement('div');
-            novoCampo.innerHTML = `
-            <div class="campo-tipo-conflito">
-                <select class="tipo-conflito">
-                    <option value="materia-prima">Matéria Prima</option>
-                    <option value="regiao">Região</option>
-                    <option value="religiao">Religião</option>
-                    <option value="etnia">Etnia</option>
-                </select>
-                <input type="text" class="descricao-conflito" placeholder="Nome do Conflito" />
-            </div>
-            `;
-            opcoesDiv.appendChild(novoCampo);
-        }
-    </script>
+
   </div>
 
   <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>

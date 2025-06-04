@@ -201,3 +201,11 @@ span {
     margin: 24px 0;
     gap: 24px;
 }
+
+.remover-tipo {
+    background: none;
+    border: none;
+    color: var(--cinza2);
+    font: var(--body1);
+    cursor: pointer;
+}

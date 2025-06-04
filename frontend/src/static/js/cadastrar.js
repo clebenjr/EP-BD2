@@ -1,5 +1,19 @@
 function adicionarTipo() {
-  alert("Função para adicionar novo tipo de conflito.");
+  const opcoesDiv = document.getElementById('tipo-conflito-opcoes');
+  const novoCampo = document.createElement('div');
+  novoCampo.innerHTML = `
+  <div class="campo-tipo-conflito">
+      <button class="remover-tipo" onclick="this.parentElement.remove()">Remover</button>
+      <select class="tipo-conflito">
+          <option value="materia-prima">Matéria Prima</option>
+          <option value="regiao">Região</option>
+          <option value="religiao">Religião</option>
+          <option value="etnia">Etnia</option>
+      </select>
+      <input type="text" class="descricao-conflito" placeholder="Nome do Conflito" />
+  </div>
+  `;
+  opcoesDiv.appendChild(novoCampo);
 }
 
 function adicionarConflito() {
