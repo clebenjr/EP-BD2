@@ -53,24 +53,20 @@ class Banco:
     
     def busca_traficantes_e_grupos_armados(self):
         self.cur.execute("""
-                        SELECT DISTINCT
+                    SELECT DISTINCT
                         t.nome AS NomeTraficante,
-                        ga.nome AS NomeGrupoArmado
-                        -- Você pode adicionar a.Tipo se quiser ver a arma específica
-                        -- , a.Tipo AS TipoArma
+                        ga.nome AS NomeGrupoArmado,
+                        a.tipo AS TipoArma -- Coluna adicionada para mostrar o nome da arma
                     FROM
-                        traficante t,
-                        grupo_armado ga,
-                        fornece_arma_grupo f,
-                        arma a  -- Adicionar a tabela Arma
+                        traficante t
+                    JOIN
+                        fornece_arma_grupo fag ON t.nome = fag.nome_traficante
+                    JOIN
+                        grupo_armado ga ON fag.id_grupo_armado = ga.id
+                    JOIN
+                        arma a ON fag.tipo_arma = a.tipo
                     WHERE
-                        -- Condições de Junção
-                        f.nome_traficante = t.nome AND
-                        f.id_grupo_armado = ga.id AND
-                        f.tipo_arma = a.tipo AND  -- Junção com a tabela Arma
-
-                        -- Condição de Filtragem nas armas
-                        (a.tipo = 'Barret M82' OR a.tipo = 'M200 Intervention');
+                        a.tipo = 'Barret M82' OR a.tipo = 'M200 Intervention';
                     """)
         rows = self.cur.fetchall()
         return rows
