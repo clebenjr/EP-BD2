@@ -46,6 +46,42 @@ def cadastrar_divisao():
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-divisao.html')
+    
+
+@app.route('/cadastrar/chefe', methods=['GET', 'POST'])
+def cadastrar_chefe():
+    if request.method == 'POST':
+        # Aqui você pode processar os dados do formulário
+        # Por exemplo, salvar no banco de dados
+        pass
+    # Renderiza o template para cadastrar um conflito
+    else:
+        # Aqui você pode carregar dados necessários para o formulário, se necessário
+        return render_template('cadastrar-chefes.html')
+
+
+@app.route('/cadastrar/grupos', methods=['GET', 'POST'])
+def cadastrar_grupos_militares():
+    if request.method == 'POST':
+        # Aqui você pode processar os dados do formulário
+        # Por exemplo, salvar no banco de dados
+        pass
+    # Renderiza o template para cadastrar um conflito
+    else:
+        # Aqui você pode carregar dados necessários para o formulário, se necessário
+        return render_template('cadastrar-grupos.html')
+    
+
+@app.route('/cadastrar/lideres', methods=['GET', 'POST'])
+def cadastrar_lideres():
+    if request.method == 'POST':
+        # Aqui você pode processar os dados do formulário
+        # Por exemplo, salvar no banco de dados
+        pass
+    # Renderiza o template para cadastrar um conflito
+    else:
+        # Aqui você pode carregar dados necessários para o formulário, se necessário
+        return render_template('cadastrar-lideres.html')
 
 
 if __name__ == '__main__':

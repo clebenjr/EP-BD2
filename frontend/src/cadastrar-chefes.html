@@ -6,34 +6,40 @@ Cadastrar Conflito
 {% block main %}
 <div class="form-group escolher-cadastro">
     <label for="tipo">Adicionar:</label>
-    <select id="tipo">
-      <option value="">Divisão</option>
-      <option>Conflito Bélico</option>
-      <option>Grupos Militares</option>
-      <option value="">Líderes Políticos</option>
-      <option value="">Chefe Militar</option>
+    <select id="tipo" onchange="redirecionarCadastro()">
+      <option value="divisao">Divisão</option>
+      <option value="conflito">Conflito Bélico</option>
+      <option value="grupos">Grupos Militares</option>
+      <option value="lideres">Líderes Políticos</option>
+      <option selected value="chefe">Chefe Militar</option>
     </select>
   </div>
 
   <div class="form-group">
-    <label for="nome">Nome:*</label>
-    <input type="text" id="nome" placeholder="Digite o nome do conflito" />
+    <label for="nome_lider">Escolher Nome Líder Político (PK da outra tabela):*</label>
+    <input type="text" id="nome_lider" placeholder="Digite o nome do líder" />
   </div>
 
   <div class="form-group">
-    <label for="mortos">Número de Mortos:*</label>
-    <input type="number" id="mortos" placeholder="Digite o número de mortos" />
+    <label for="barcos">Digite ID do Grupo do Líder Político:*</label>
+    <input type="text" id="barcos" placeholder="Digite o número de barcos" />
   </div>
 
   <div class="form-group">
-    <label for="feridos">Número de Feridos:*</label>
-    <input type="number" id="feridos" placeholder="Digite o número de feridos" />
+    <label for="faixas">Faixas Hierárquicas:*</label>
+    <input type="text" id="faixas" placeholder="Digite a faixa hierárquica: tenente, general etc..." />
   </div>
 
-  <div class="form-group adicionar-tipo">
-    <span>Adicionar Tipo de Conflito</span>
-    <button onclick="adicionarTipo()">&#x2795;</button>
+  <div class="form-group">
+    <label for="divisao">Digite o ID da Divisão:*</label>
+    <input type="number" id="divisao" placeholder="Digite o id da divisão" />
   </div>
+
+  <div class="form-group">
+    <label for="avioes">Digite o ID do Grupo Armado da Divisão:*</label>
+    <input type="number" id="avioes" placeholder="Digite o número de aviões" />
+  </div>
+
 
   <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
   {% endblock %}

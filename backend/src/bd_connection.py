@@ -34,7 +34,7 @@ class Banco:
             'Por Matéria Prima' AS TipoDeConflito,
             COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
         FROM
-            Materias_Primas_disputadas -- Presumindo que o nome da tabela seja "Materias_Primas" ou similar sem acentos/espaços. Ajuste se necessário.
+            Materias_Primas_conflito -- Presumindo que o nome da tabela seja "Materias_Primas" ou similar sem acentos/espaços. Ajuste se necessário.
         UNION ALL
         SELECT
             'Por Religião' AS TipoDeConflito,
@@ -70,7 +70,7 @@ class Banco:
                         f.tipo_arma = a.tipo AND  -- Junção com a tabela Arma
 
                         -- Condição de Filtragem nas armas
-                        (a.tipo = 'Barret M82' OR a.tipo = 'M200 intervention');
+                        (a.tipo = 'Barret M82' OR a.tipo = 'M200 Intervention');
                     """)
         rows = self.cur.fetchall()
         return rows
