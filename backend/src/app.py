@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from bd_connection import Banco
 from pathlib import Path
 
@@ -24,10 +24,16 @@ def index():
                             grupos_armados=grupos_armados,
                             pais=pais)
 
-@app.route('/cadastrar')
-@app.route('/cadastrar.html')
-def cadastrar():
-    return render_template('cadastrar-conflito.html')
+@app.route('/cadastrar/conflito', methods=['GET', 'POST'])
+def cadastrar_conflito():
+    if request.method == 'POST':
+        # Aqui você pode processar os dados do formulário
+        # Por exemplo, salvar no banco de dados
+        pass
+    # Renderiza o template para cadastrar um conflito
+    else:
+        # Aqui você pode carregar dados necessários para o formulário, se necessário
+        return render_template('cadastrar-conflito.html')
 
 
 
