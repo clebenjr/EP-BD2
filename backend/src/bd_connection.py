@@ -23,7 +23,7 @@ class Banco:
         
 
     
-    def busca_tabela(self):
+    def busca_grafico(self):
         self.cur.execute("""SELECT
         'Por Região' AS TipoDeConflito,
         COUNT(DISTINCT id_conflito) AS NumeroDeConflitos

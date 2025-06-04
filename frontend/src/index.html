@@ -67,6 +67,7 @@
     </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script> const graf = {{ grafico | tojson}}; </script>
   <script src="{{ url_for('static', filename='js/visualizar.js') }}"></script>
 </body>
 </html>

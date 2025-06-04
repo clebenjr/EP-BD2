@@ -5,16 +5,15 @@ from pathlib import Path
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / 'frontend' / 'src'
 
 app = Flask(__name__, template_folder=FRONTEND_DIR, static_folder=FRONTEND_DIR / 'static')
+bd = Banco()
 
 @app.route('/')
 @app.route('/index')
 def index():
-    bd = Banco()
-    print(bd.busca_tabela())
-    bd.close()
-    return render_template('index.html')
+    return render_template('index.html', grafico=bd.busca_grafico())
 
 @app.route('/cadastrar')
+@app.route('/cadastrar.html')
 def cadastrar():
     return render_template('cadastrar.html')
 
