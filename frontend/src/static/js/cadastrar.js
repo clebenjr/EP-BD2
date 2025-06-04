@@ -3,14 +3,14 @@ function adicionarTipo() {
   const novoCampo = document.createElement('div');
   novoCampo.innerHTML = `
   <div class="campo-tipo-conflito">
-      <button class="remover-tipo" onclick="this.parentElement.remove()">Remover</button>
       <select class="tipo-conflito">
           <option value="materia-prima">Matéria Prima</option>
           <option value="regiao">Região</option>
           <option value="religiao">Religião</option>
           <option value="etnia">Etnia</option>
       </select>
-      <input type="text" class="descricao-conflito" placeholder="Nome do Conflito" />
+      <input type="text" class="descricao-conflito" placeholder="Nome do Conflito" /> 
+      <button class="remover-tipo" onclick="this.parentElement.remove()"><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/trash.png" alt="trash"/>Remover</button>
   </div>
   `;
   opcoesDiv.appendChild(novoCampo);

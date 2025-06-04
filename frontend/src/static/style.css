@@ -199,12 +199,21 @@ span {
     justify-content: space-between;
     align-items: center;
     margin: 24px 0;
-    gap: 24px;
+    gap: 16px;
+}
+
+.tipo-conflito {
+    font: var(--body2);
 }
 
 .remover-tipo {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     background: none;
+    /* border: 2px solid red; */
     border: none;
+    border-radius: 4px;
     color: var(--cinza2);
     font: var(--body1);
     cursor: pointer;
