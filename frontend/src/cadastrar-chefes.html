@@ -1,0 +1,39 @@
+{% extends 'cadastrar.html' %}
+{% block title %}
+Cadastrar Conflito
+{% endblock %}
+
+{% block main %}
+<div class="form-group escolher-cadastro">
+    <label for="tipo">Adicionar:</label>
+    <select id="tipo">
+      <option value="">Divisão</option>
+      <option>Conflito Bélico</option>
+      <option>Grupos Militares</option>
+      <option value="">Líderes Políticos</option>
+      <option value="">Chefe Militar</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="nome">Nome:*</label>
+    <input type="text" id="nome" placeholder="Digite o nome do conflito" />
+  </div>
+
+  <div class="form-group">
+    <label for="mortos">Número de Mortos:*</label>
+    <input type="number" id="mortos" placeholder="Digite o número de mortos" />
+  </div>
+
+  <div class="form-group">
+    <label for="feridos">Número de Feridos:*</label>
+    <input type="number" id="feridos" placeholder="Digite o número de feridos" />
+  </div>
+
+  <div class="form-group adicionar-tipo">
+    <span>Adicionar Tipo de Conflito</span>
+    <button onclick="adicionarTipo()">&#x2795;</button>
+  </div>
+
+  <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+  {% endblock %}

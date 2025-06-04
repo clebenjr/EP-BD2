@@ -27,7 +27,7 @@ def index():
 @app.route('/cadastrar')
 @app.route('/cadastrar.html')
 def cadastrar():
-    return render_template('cadastrar.html')
+    return render_template('cadastrar-conflito.html')
 
 
 
