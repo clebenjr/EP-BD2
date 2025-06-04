@@ -28,25 +28,25 @@ class Banco:
         'Por Região' AS TipoDeConflito,
         COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
         FROM
-            Regioes
+            Regioes_conflito
         UNION ALL
         SELECT
             'Por Matéria Prima' AS TipoDeConflito,
             COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
         FROM
-            Materias_Primas -- Presumindo que o nome da tabela seja "Materias_Primas" ou similar sem acentos/espaços. Ajuste se necessário.
+            Materias_Primas_disputadas -- Presumindo que o nome da tabela seja "Materias_Primas" ou similar sem acentos/espaços. Ajuste se necessário.
         UNION ALL
         SELECT
             'Por Religião' AS TipoDeConflito,
             COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
         FROM
-            religioes 
+            religioes_conflito
         UNION ALL
         SELECT
             'Por Etnia' AS TipoDeConflito,
             COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
         FROM
-            Etnias;
+            Etnias_conflito;
         """)  
         rows = self.cur.fetchall()
         return rows
@@ -61,7 +61,7 @@ class Banco:
                     FROM
                         traficante t,
                         grupo_armado ga,
-                        fornece f,
+                        fornece_arma_grupo f,
                         arma a  -- Adicionar a tabela Arma
                     WHERE
                         -- Condições de Junção
@@ -113,9 +113,9 @@ class Banco:
         self.cur.execute("""
                         SELECT
                             GA.nome AS NomeGrupoArmado,
-                            SUM(F.Quantidade) AS TotalArmasFornecidas
+                            SUM(F.Quantidade_fornecida) AS TotalArmasFornecidas
                         FROM
-                            fornece F
+                            fornece_arma_grupo F
                         INNER JOIN
                             grupo_armado GA ON F.id_grupo_armado = GA.id
                         GROUP BY
@@ -135,7 +135,7 @@ class Banco:
                         FROM
                             afeta A
                         INNER JOIN
-                            religioes R ON a.id_conflito = R.id_conflito
+                            religioes_conflito R ON a.id_conflito = R.id_conflito
                         GROUP BY
                             A.nome_pais
                         ORDER BY

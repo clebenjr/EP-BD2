@@ -6,12 +6,12 @@ Cadastrar Conflito
 {% block main %}
 <div class="form-group escolher-cadastro">
     <label for="tipo">Adicionar:</label>
-    <select id="tipo">
-      <option value="">Divisão</option>
-      <option selected>Conflito Bélico</option>
-      <option>Grupos Militares</option>
-      <option value="">Líderes Políticos</option>
-      <option value="">Chefe Militar</option>
+    <select id="tipo" onchange="redirecionarCadastro()">
+      <option value="divisao">Divisão</option>
+      <option selected value="conflito">Conflito Bélico</option>
+      <option value="grupos">Grupos Militares</option>
+      <option value="lideres">Líderes Políticos</option>
+      <option value="chefe">Chefe Militar</option>
     </select>
   </div>
 

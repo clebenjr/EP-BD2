@@ -1,39 +1,50 @@
 {% extends 'cadastrar.html' %}
 {% block title %}
-Cadastrar Conflito
+Cadastrar Divisão
 {% endblock %}
 
 {% block main %}
 <div class="form-group escolher-cadastro">
     <label for="tipo">Adicionar:</label>
-    <select id="tipo">
-      <option value="">Divisão</option>
-      <option>Conflito Bélico</option>
-      <option>Grupos Militares</option>
-      <option value="">Líderes Políticos</option>
-      <option value="">Chefe Militar</option>
+    <select id="tipo" onchange="redirecionarCadastro()">
+      <option selected value="divisao">Divisão</option>
+      <option value="conflito">Conflito Bélico</option>
+      <option value="grupos">Grupos Militares</option>
+      <option value="lideres">Líderes Políticos</option>
+      <option value="chefe">Chefe Militar</option>
     </select>
   </div>
 
   <div class="form-group">
-    <label for="nome">Nome:*</label>
-    <input type="text" id="nome" placeholder="Digite o nome do conflito" />
+    <label for="grupo_armado">Escolher Grupo Armado (PK da outra tabela):*</label>
+    <input type="number" id="grupo_armado" placeholder="Digite o id do grupo armado" />
   </div>
 
   <div class="form-group">
-    <label for="mortos">Número de Mortos:*</label>
-    <input type="number" id="mortos" placeholder="Digite o número de mortos" />
+    <label for="barcos">Barcos:*</label>
+    <input type="number" id="barcos" placeholder="Digite o número de barcos" />
   </div>
 
   <div class="form-group">
-    <label for="feridos">Número de Feridos:*</label>
-    <input type="number" id="feridos" placeholder="Digite o número de feridos" />
+    <label for="homens">Homens:*</label>
+    <input type="number" id="homens" placeholder="Digite o número de homens" />
   </div>
 
-  <div class="form-group adicionar-tipo">
-    <span>Adicionar Tipo de Conflito</span>
-    <button onclick="adicionarTipo()">&#x2795;</button>
+  <div class="form-group">
+    <label for="tanques">Tanques:*</label>
+    <input type="number" id="tanques" placeholder="Digite o número de tanques" />
+  </div>
+
+  <div class="form-group">
+    <label for="avioes">Aviões:*</label>
+    <input type="number" id="avioes" placeholder="Digite o número de aviões" />
+  </div>
+
+  <div class="form-group">
+    <label for="baixas">Baixas:*</label>
+    <input type="number" id="baixas" placeholder="Digite o número de baixas" />
   </div>
 
   <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+
   {% endblock %}

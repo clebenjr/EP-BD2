@@ -14,3 +14,10 @@ function adicionarConflito() {
 
   alert(`Conflito "${nome}" adicionado com sucesso!`);
 }
+
+
+function redirecionarCadastro() {
+  const tipo = document.getElementById('tipo').value;
+  // Redireciona para a rota correspondente
+  window.location.href = `/cadastrar/${tipo}`;
+}
