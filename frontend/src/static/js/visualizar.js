@@ -1,5 +1,10 @@
 const ctx = document.getElementById('myChart');
 
+// Calcula o valor máximo do dataset
+const maxValue = Math.max(...[graf[0][1], graf[1][1], graf[2][1], graf[3][1]]);
+// Define uma margem de 10% acima do valor máximo
+const suggestedMax = Math.ceil(maxValue * 1.1);
+
 new Chart(ctx, {
   type: 'bar',
   data: {
@@ -15,7 +20,8 @@ new Chart(ctx, {
   options: {
     scales: {
       y: {
-        beginAtZero: true
+        beginAtZero: true,
+        suggestedMax: suggestedMax,
       }
     }
   }
