@@ -2,7 +2,9 @@
 SET search_path TO ep2_bd2;
 
 -- Testes para Trigger 1: fn_check_max_tres_chefes_por_divisao()
-RAISE NOTICE E'--------------------------------------\nINICIANDO TESTES PARA TRIGGER 1: Máximo 3 Chefes por Divisão\n--------------------------------------';
+-- --------------------------------------
+-- INICIANDO TESTES PARA TRIGGER 1: Máximo 3 Chefes por Divisão
+-- --------------------------------------
 BEGIN; -- Transação SQL para este bloco de teste
 DO $$
 DECLARE
@@ -43,21 +45,25 @@ BEGIN
         RAISE EXCEPTION 'FALHA NO TESTE: Trigger 1 não impediu o 4º chefe militar.'; -- Não deve chegar aqui
     EXCEPTION
         WHEN raise_exception THEN -- Captura exceções levantadas por RAISE EXCEPTION
-            IF SQLERRM LIKE '%P0004%' OR SQLERRM LIKE '%máximo de 3 chefes militares%' THEN
+            IF SQLSTATE = 'P0004' OR SQLERRM LIKE '%máximo de 3 chefes militares%' THEN -- Verificando SQLSTATE P0004
                 RAISE NOTICE ' -> SUCESSO: Trigger 1 impediu o 4º Chefe Militar como esperado. Erro: %', SQLERRM;
             ELSE
-                RAISE NOTICE ' -> ERRO INESPERADO NO TESTE 1: Outra exceção ocorreu: %', SQLERRM;
+                RAISE NOTICE ' -> ERRO INESPERADO NO TESTE 1: Outra exceção ocorreu (SQLSTATE: %, SQLERRM: %)', SQLSTATE, SQLERRM;
                 RAISE; -- Re-levanta a exceção inesperada
             END IF;
     END;
 
 END $$;
 ROLLBACK;
-RAISE NOTICE E'--------------------------------------\nTeste do Trigger 1 concluído.\n--------------------------------------\n';
+-- --------------------------------------
+-- Teste do Trigger 1 concluído.
+-- --------------------------------------
 
 
 -- Testes para Trigger 2: fn_check_min_dois_grupos_por_conflito()
-RAISE NOTICE E'--------------------------------------\nINICIANDO TESTES PARA TRIGGER 2: Mínimo 2 Grupos Ativos por Conflito\n--------------------------------------';
+-- --------------------------------------
+-- INICIANDO TESTES PARA TRIGGER 2: Mínimo 2 Grupos Ativos por Conflito
+-- --------------------------------------
 BEGIN; -- Transação SQL para este bloco de teste
 DO $$
 DECLARE
@@ -79,19 +85,23 @@ BEGIN
         RAISE EXCEPTION 'FALHA NO TESTE: Trigger 2 não impediu a remoção do grupo.'; -- Não deve chegar aqui
     EXCEPTION
         WHEN raise_exception THEN
-             IF SQLERRM LIKE '%P0001%' OR SQLERRM LIKE '%pelo menos dois grupos armados participando ativamente%' THEN
+             IF SQLSTATE = 'P0001' OR SQLERRM LIKE '%pelo menos dois grupos armados participando ativamente%' THEN -- Verificando SQLSTATE P0001
                 RAISE NOTICE ' -> SUCESSO: Trigger 2 impediu a remoção do grupo como esperado. Erro: %', SQLERRM;
             ELSE
-                RAISE NOTICE ' -> ERRO INESPERADO NO TESTE 2: Outra exceção ocorreu: %', SQLERRM;
+                RAISE NOTICE ' -> ERRO INESPERADO NO TESTE 2: Outra exceção ocorreu (SQLSTATE: %, SQLERRM: %)', SQLSTATE, SQLERRM;
                 RAISE; 
             END IF;
     END;
 END $$;
 ROLLBACK;
-RAISE NOTICE E'--------------------------------------\nTeste do Trigger 2 concluído.\n--------------------------------------\n';
+-- --------------------------------------
+-- Teste do Trigger 2 concluído.
+-- --------------------------------------
 
 -- Testes para Trigger 3: fn_update_grupo_total_baixas()
-RAISE NOTICE E'--------------------------------------\nINICIANDO TESTES PARA TRIGGER 3: Consistência de Baixas Totais do Grupo\n--------------------------------------';
+-- --------------------------------------
+-- INICIANDO TESTES PARA TRIGGER 3: Consistência de Baixas Totais do Grupo
+-- --------------------------------------
 
 -- Teste 3.1: INSERT em 'divisao'
 BEGIN;
@@ -193,8 +203,13 @@ BEGIN
     RAISE NOTICE ' -> Baixas Grupo 1 ANTES: %. Baixas Grupo 2 ANTES: %. Baixas Divisão 1 (Grupo 1) a ser movida: %', baixas_grupo1_antes, baixas_grupo2_antes, baixas_divisao_movida;
 
     -- Precisa limpar/atualizar dependências em chefe_militar antes de mover divisão
-    UPDATE chefe_militar SET id_grupo_armado_divisao = 2 WHERE id_divisao = 1 AND id_grupo_armado_divisao = 1;
-    RAISE NOTICE '   -> Dependência em chefe_militar para Divisão 1 (Grupo 1) atualizada para Grupo 2 (se existia).';
+    -- (Chefe com id_lider_politico = 'Alistair Vance', id_grupo_lider_politico = 1 comanda div(1,1))
+    -- Se o schema tiver UNIQUE (nome_lider_politico, id_grupo_lider_politico) na FK de chefe_militar,
+    -- e não tiver um líder para o grupo 2, esta parte pode precisar de ajuste ou o chefe precisa ser removido.
+    -- Assumindo que 'Alistair Vance' não lidera o grupo 2 para evitar conflito na UNIQUE de chefe_militar.
+    -- Vamos remover o chefe associado à divisão que está sendo movida.
+    DELETE FROM chefe_militar WHERE id_divisao = 1 AND id_grupo_armado_divisao = 1;
+    RAISE NOTICE '   -> Dependência em chefe_militar para Divisão 1 (Grupo 1) removida (se existia).';
     
     UPDATE divisao SET id_grupo = 2 WHERE id = 1 AND id_grupo = 1; 
     RAISE NOTICE ' -> Divisão 1 (originalmente do Grupo 1) movida para o Grupo 2.';
@@ -210,12 +225,16 @@ BEGIN
     END IF;
 END $$;
 ROLLBACK;
-RAISE NOTICE E'--------------------------------------\nTeste do Trigger 3 concluído.\n--------------------------------------\n';
+-- --------------------------------------
+-- Teste do Trigger 3 concluído.
+-- --------------------------------------
 
 -- Testes para Trigger 4: fn_set_numero_divisao_no_grupo()
 -- Pré-requisito: A coluna 'numero_divisao_no_grupo' e a constraint UNIQUE(id_grupo, numero_divisao_no_grupo)
 -- devem existir na tabela 'divisao'.
-RAISE NOTICE E'--------------------------------------\nINICIANDO TESTES PARA TRIGGER 4: Geração de Número Sequencial de Divisão\n--------------------------------------';
+-- --------------------------------------
+-- INICIANDO TESTES PARA TRIGGER 4: Geração de Número Sequencial de Divisão
+-- --------------------------------------
 BEGIN; -- Transação SQL para este bloco de teste
 DO $$
 DECLARE
@@ -231,21 +250,21 @@ BEGIN
     VALUES (101, 1, 1, 10, 1, 0, 10); 
     SELECT numero_divisao_no_grupo INTO v_num_div_grupo FROM divisao WHERE id_grupo = 1 AND id = 101;
     RAISE NOTICE ' -> Divisão 101 (Grupo 1) inserida. numero_divisao_no_grupo: % (Esperado: 1)', v_num_div_grupo;
-     IF v_num_div_grupo != 1 THEN RAISE NOTICE '   -> FALHA: Sequencial não é 1.'; END IF;
+     IF v_num_div_grupo != 1 THEN RAISE NOTICE '   -> FALHA NO TESTE 4.1: Sequencial não é 1.'; END IF;
 
 
     INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) 
     VALUES (102, 1, 2, 20, 2, 0, 20); 
     SELECT numero_divisao_no_grupo INTO v_num_div_grupo FROM divisao WHERE id_grupo = 1 AND id = 102;
     RAISE NOTICE ' -> Divisão 102 (Grupo 1) inserida. numero_divisao_no_grupo: % (Esperado: 2)', v_num_div_grupo;
-     IF v_num_div_grupo != 2 THEN RAISE NOTICE '   -> FALHA: Sequencial não é 2.'; END IF;
+     IF v_num_div_grupo != 2 THEN RAISE NOTICE '   -> FALHA NO TESTE 4.1: Sequencial não é 2.'; END IF;
 
     RAISE NOTICE E'\nTeste 4.2: INSERT em divisao especificando numero_divisao_no_grupo (trigger não deve sobrescrever)';
     INSERT INTO divisao (id, id_grupo, numero_divisao_no_grupo, barcos, homens, tanques, avioes, baixas) 
     VALUES (103, 1, 10, 3, 30, 3, 0, 30); 
     SELECT numero_divisao_no_grupo INTO v_num_div_grupo FROM divisao WHERE id_grupo = 1 AND id = 103;
     RAISE NOTICE ' -> Divisão 103 (Grupo 1) inserida com numero_divisao_no_grupo = 10. Obtido: % (Esperado: 10)', v_num_div_grupo;
-    IF v_num_div_grupo != 10 THEN RAISE NOTICE '   -> FALHA: Valor especificado não mantido.'; END IF;
+    IF v_num_div_grupo != 10 THEN RAISE NOTICE '   -> FALHA NO TESTE 4.2: Valor especificado não mantido.'; END IF;
 
     -- Teste de violação da constraint UNIQUE (id_grupo, numero_divisao_no_grupo)
     RAISE NOTICE E'\nTeste 4.3: Tentando inserir numero_divisao_no_grupo duplicado (deve falhar pela constraint UNIQUE)';
@@ -257,13 +276,21 @@ BEGIN
         WHEN unique_violation THEN
             RAISE NOTICE ' -> SUCESSO: Constraint UNIQUE impediu numero_divisao_no_grupo duplicado como esperado. Erro: %', SQLERRM;
         WHEN OTHERS THEN
-            RAISE NOTICE ' -> ERRO INESPERADO NO TESTE 4.3: Outra exceção ocorreu: %', SQLERRM;
+            RAISE NOTICE ' -> ERRO INESPERADO NO TESTE 4.3: Outra exceção ocorreu (SQLSTATE: %, SQLERRM: %)', SQLSTATE, SQLERRM;
             RAISE;
     END;
 
 END $$;
 ROLLBACK;
-RAISE NOTICE E'--------------------------------------\nTeste do Trigger 4 concluído.\n--------------------------------------';
+-- --------------------------------------
+-- Teste do Trigger 4 concluído.
+-- --------------------------------------
 
-RAISE NOTICE 'Todos os testes de triggers concluídos.';
+-- --------------------------------------
+-- Todos os testes de triggers concluídos.
+-- --------------------------------------
+DO $$
+BEGIN
+    RAISE NOTICE 'Todos os testes de triggers concluídos.';
+END $$;
 
