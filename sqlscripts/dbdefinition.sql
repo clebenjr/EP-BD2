@@ -59,7 +59,7 @@ CREATE TABLE etnias_conflito ( -- Renomeado de 'etnias'
 -- Grupos armados
 CREATE TABLE grupo_armado (
     id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL UNIQUE -- Nome do grupo armado deve ser único
+    nome VARCHAR(255) NOT NULL UNIQUE, -- Nome do grupo armado deve ser único
 );
 
 -- Divisões dos grupos armados

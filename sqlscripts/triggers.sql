@@ -11,11 +11,11 @@ DECLARE
     chefe_count INTEGER;
 BEGIN
     -- Verifica apenas se uma divisão está sendo atribuída ou alterada
-    IF NEW.id_da_divisao IS NOT NULL AND NEW.id_grupo_da_divisao IS NOT NULL THEN
-        SELECT COUNT(*) INTO chefe_count
-        FROM ep2_bd2.chefe_militar
-        WHERE id_da_divisao = NEW.id_da_divisao AND id_grupo_da_divisao = NEW.id_grupo_da_divisao
-          AND id != COALESCE(NEW.id, -1); -- Exclui o próprio chefe se for um UPDATE
+
+    SELECT COUNT(*) INTO chefe_count
+    FROM ep2_bd2.chefe_militar
+    WHERE id_divisao = NEW.id_divisao AND id_grupo_armado_divisao = NEW.id_grupo_armado_divisao
+        AND id != COALESCE(NEW.id, -1); -- Exclui o próprio chefe se for um UPDATE
 
         -- Se for INSERT, a contagem não inclui o NEW.
         -- Se for UPDATE, o COUNT acima já exclui o NEW.id (se existir).
@@ -23,7 +23,7 @@ BEGIN
         -- Se já existem 3, chefe_count será 3, e adicionar/mover um 4º é proibido.
         IF chefe_count >= 3 THEN
             RAISE EXCEPTION 'Operação inválida: A divisão ID % (Grupo ID %) já possui o máximo de 3 chefes militares.',
-                NEW.id_da_divisao, NEW.id_grupo_da_divisao
+                NEW.id_divisao, NEW.id_grupo_armado_divisao
             USING ERRCODE = 'P0004', HINT = 'Uma divisão não pode ter mais de 3 chefes.';
         END IF;
     END IF;
