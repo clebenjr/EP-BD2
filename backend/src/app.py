@@ -63,10 +63,10 @@ def cadastrar_chefe():
 @app.route('/cadastrar/grupos', methods=['GET', 'POST'])
 def cadastrar_grupos_militares():
     if request.method == 'POST':
-        # Aqui você pode processar os dados do formulário
-        # Por exemplo, salvar no banco de dados
-        pass
-    # Renderiza o template para cadastrar um conflito
+        print(request.form['nome'])
+        print("Adicionando grupo militar")
+        bd.cadastrar_grupo(request.form['nome'])
+        return "funcionou"
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-grupos.html')

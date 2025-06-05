@@ -141,6 +141,11 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    def cadastrar_grupo(self, nome):
+        self.cur.execute("INSERT INTO grupo_armado (nome) VALUES (%s)", (nome,))
+        self.conn.commit()
+        return "Funcionou"
+    
     def close(self):
         self.cur.close()
         self.conn.close()
