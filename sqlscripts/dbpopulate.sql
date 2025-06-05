@@ -42,7 +42,7 @@ INSERT INTO conflito (id, numero_de_mortos, numero_de_feridos, nome) VALUES
 
 -- Povoando a tabela afeta
 INSERT INTO afeta (nome_pais, id_conflito) VALUES
-('Ucrânia', 1), ('Rússia', 1), ('Palestina', 1), -- Palestina adicionada ao conflito 1
+('Ucrânia', 1), ('Rússia', 1), ('Palestina', 1), 
 ('Sudão', 2), ('Etiópia', 2),
 ('Colômbia', 3), ('Brasil', 3), ('Sérvia', 4), ('Portugal', 4), ('Polônia', 4),
 ('Afeganistão', 5), ('Myanmar', 5), ('Nigéria', 6), ('Somália', 6),
@@ -62,7 +62,7 @@ INSERT INTO afeta (nome_pais, id_conflito) VALUES
 
 -- Povoando tabelas de causas de conflitos (GARANTINDO PELO MENOS UMA CAUSA POR CONFLITO)
 INSERT INTO regioes_conflito (id_conflito, regiao) VALUES
-(1, 'Norte da Ucrânia'), -- Conflito 1 já era territorial, mantido
+(1, 'Norte da Ucrânia'), (1, 'Oeste da Rússia'), 
 (4, 'Kosovo'), (4, 'Bósnia'),                 
 (7, 'Ilhas Selvagens'),                        
 (12, 'Donbass'),                               
@@ -81,7 +81,7 @@ INSERT INTO materias_primas_conflito (id_conflito, materia_prima) VALUES
 (25, 'Gás Natural Ártico');                   
 
 INSERT INTO religioes_conflito (id_conflito, religiao) VALUES
-(1, 'Disputa de Locais Sagrados Antigos'), -- Conflito 1 agora também é religioso
+(1, 'Disputa de Locais Sagrados Antigos'), 
 (4, 'Cristianismo Ortodoxo Sérvio'), (4, 'Islamismo Bósnio'), 
 (8, 'Culto do Sol Dourado'), (8, 'Fé da Lua Prateada'), 
 (11, 'Judaísmo'), (11, 'Islamismo'),          
@@ -109,6 +109,10 @@ INSERT INTO grupo_armado (id, nome) VALUES
 (21, 'Brigada Europeia de Defesa'), (22, 'Força Tarefa Americana'), (23, 'Dragões Asiáticos'), (24, 'Lobos do Ártico'), (25, 'Milícia da Fronteira Mexicana');
 
 -- Povoando a tabela divisao (25 divisões)
+-- No script de criação, a PK de divisao é (id, id_grupo) e 'id' não é SERIAL.
+-- Para manter a consistência com o povoamento anterior, vamos assumir que 'id' se refere a um número
+-- sequencial dentro do grupo, ou um identificador único para a divisão que também é usado como 'id_divisao' em chefe_militar.
+-- Para este script, vamos manter os IDs de 1 a 25 como o 'id' da divisão, e o 'id_grupo' associado.
 INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALUES
 (1, 1, 5, 2000, 50, 5, 300), (2, 1, 0, 1500, 30, 2, 150), (3, 2, 10, 3000, 70, 10, 500),
 (4, 3, 2, 1000, 20, 0, 100), (5, 4, 0, 2500, 60, 8, 400), (6, 5, 15, 5000, 100, 15, 800),
@@ -135,22 +139,34 @@ INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
 ('Jean-Luc Picard', 21, 'Conselho da Federação Europeia'), ('James Kirk', 22, 'Congresso dos Estados Unidos'),
 ('Li Shang', 23, 'Comitê Central Asiático'), ('Sven Olafson', 24, 'Parlamento Nórdico Unificado'), ('Maria Sanchez', 25, 'Assembleia da Fronteira');
 
--- Povoando a tabela chefe_militar
-INSERT INTO chefe_militar (id, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao) VALUES
-(1, 'General de Brigada', 'Alistair Vance', 1, 1), (2, 'Coronel', 'Sofia Rostova', 2, 3),
-(3, 'Major-General', 'Kaelen', 3, 4), (4, 'Capitão', 'Lyra Moon', 4, 5),
-(5, 'Tenente-Coronel', 'Ivan Petrov', 5, 6), (6, 'General de Divisão', 'Anya Sharma', 6, 7),
-(7, 'Sargento-Mor', 'Omar Al-Jamil', 7, 8), (8, 'Major', 'Rex Nebula', 8, 9),
-(9, 'Coronel Pleno', 'Elena Petrova', 9, 10), (10, 'General', 'Kai Manu', 10, 11),
-(11, 'Comandante', 'Jian Li', 11, 12), (12, 'Almirante', 'Marcus Tiberius', 12, 13),
-(13, 'Tenente', 'Aisha Bello', 13, 14), (14, 'Brigadeiro', 'Zara Khan', 14, 15),
-(15, 'Capitão de Fragata', 'Viktor Orlov', 15, 16), (16, 'Marechal de Campo', 'Miguel Silva', 16, 17),
-(17, 'Cabo Mestre', '"Sombra"', 17, 18), (18, 'General de Exército', 'Urso Cinzento', 18, 19),
-(19, 'Aspirante-a-Oficial', 'Nzinga II', 19, 20), 
-(20, 'Comodoro', 'O Oráculo', 20, 20),
-(21, 'Marechal Europeu', 'Jean-Luc Picard', 21, 21), (22, 'General 5 Estrelas', 'James Kirk', 22, 22),
-(23, 'Grande Estrategista', 'Li Shang', 23, 23), (24, 'Comandante Nórdico', 'Sven Olafson', 24, 24),
-(25, 'Jefe de Plaza', 'Maria Sanchez', 25, 25);
+-- Povoando a tabela chefe_militar (FK para divisao(id, id_grupo))
+-- id é SERIAL para chefe_militar
+INSERT INTO chefe_militar (faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) VALUES
+('General de Brigada', 'Alistair Vance', 1, 1, 1), 
+('Coronel', 'Sofia Rostova', 2, 3, 2),
+('Major-General', 'Kaelen', 3, 4, 3), 
+('Capitão', 'Lyra Moon', 4, 5, 4),
+('Tenente-Coronel', 'Ivan Petrov', 5, 6, 5), 
+('General de Divisão', 'Anya Sharma', 6, 7, 6),
+('Sargento-Mor', 'Omar Al-Jamil', 7, 8, 7), 
+('Major', 'Rex Nebula', 8, 9, 8),
+('Coronel Pleno', 'Elena Petrova', 9, 10, 9), 
+('General', 'Kai Manu', 10, 11, 10),
+('Comandante', 'Jian Li', 11, 12, 11), 
+('Almirante', 'Marcus Tiberius', 12, 13, 12),
+('Tenente', 'Aisha Bello', 13, 14, 13), 
+('Brigadeiro', 'Zara Khan', 14, 15, 14),
+('Capitão de Fragata', 'Viktor Orlov', 15, 16, 15), 
+('Marechal de Campo', 'Miguel Silva', 16, 17, 16),
+('Cabo Mestre', '"Sombra"', 17, 18, 17), 
+('General de Exército', 'Urso Cinzento', 18, 19, 18),
+('Aspirante-a-Oficial', 'Nzinga II', 19, 20, 19), 
+('Comodoro', 'O Oráculo', 20, 20, 19), -- Chefe do Oráculo comanda a divisão 20 do grupo 19
+('Marechal Europeu', 'Jean-Luc Picard', 21, 21, 21), 
+('General 5 Estrelas', 'James Kirk', 22, 22, 22),
+('Grande Estrategista', 'Li Shang', 23, 23, 23), 
+('Comandante Nórdico', 'Sven Olafson', 24, 24, 24),
+('Jefe de Plaza', 'Maria Sanchez', 25, 25, 25);
 
 -- Povoando a tabela participa_grupo
 INSERT INTO participa_grupo (id_conflito, id_grupo, data_de_incorporacao, data_de_saida) VALUES
@@ -199,13 +215,9 @@ INSERT INTO fornece_arma_grupo (id_grupo_armado, tipo_arma, nome_traficante, qua
 (22, 'Fuzil M16', 'John Doe Arms LLC', 5000), 
 (22, 'Tanque M1 Abrams', 'John Doe Arms LLC', 50),
 (21, 'Míssil Antitanque 9M133 Kornet', 'EuroArms Corp', 100),
-
--- Fornecimentos de Barret M82 (3 distintos para a query)
 (1, 'Barret M82', 'Viktor Bout', 20),             
 (10, 'Barret M82', 'Artur "O Rei" Almeida', 10),  
 (2, 'Barret M82', 'Adnan Khashoggi', 25),         
-
--- Fornecimentos de M200 Intervention (3 distintos para a query)
 (5, 'M200 Intervention', 'Monzer al-Kassar', 15),  
 (15, 'M200 Intervention', 'Sofia "A Serpente" Lima', 5), 
 (7, 'M200 Intervention', 'Semyon Mogilevich', 12);
@@ -248,3 +260,4 @@ INSERT INTO dialoga (id_organizacao, nome_lider_politico, id_grupo_lider_politic
 (1, 'Alistair Vance', 1), (2, 'Sofia Rostova', 2),
 (8, 'Jean-Luc Picard', 21), (14, 'James Kirk', 22),
 (1, 'Li Shang', 23), (15, 'James Kirk', 22);
+
