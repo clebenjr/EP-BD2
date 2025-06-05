@@ -99,43 +99,60 @@ INSERT INTO etnias_conflito (id_conflito, etnia) VALUES
 
 -- Povoando a tabela grupo_armado com total_baixas calculado
 INSERT INTO grupo_armado (id, nome, total_baixas) VALUES
-(1, 'Exército de Libertação Nacional', 450),      -- 300 + 150
-(2, 'Forças Rebeldes Unidas', 500),               -- 500
-(3, 'Milícia Popular do Sul', 100),                -- 100
-(4, 'Guardiões da Fronteira Norte', 400),         -- 400
-(5, 'Legião Estrangeira Vermelha', 800),          -- 800
-(6, 'Brigada Fantasma', 50),                       -- 50
-(7, 'Comandos do Deserto', 200),                   -- 200
-(8, 'Divisão Sombra', 350),                       -- 350
-(9, 'Frente Patriótica Revolucionária', 250),     -- 250
-(10, 'Movimento pela Autodeterminação Popular', 600),-- 600
-(11, 'Resistência Armada do Povo', 700),            -- 700
-(12, 'União dos Combatentes Livres', 180),         -- 180
-(13, 'Força de Defesa Territorial Unificada', 450), -- 450
-(14, 'Grupo de Intervenção Rápida Alfa', 320),    -- 320
-(15, 'Aliança Rebelde do Leste Profundo', 550),   -- 550
-(16, 'Combatentes pela Justiça Social Agora', 120),-- 120
-(17, 'Exército Secreto do Povo Soberano', 420),    -- 420
-(18, 'Guerrilha da Montanha Negra Indomável', 90),-- 90
-(19, 'Legião dos Oprimidos em Luta', 280),        -- 280
-(20, 'Vanguarda da Libertação Continental', 0),   -- Nenhuma divisão associada no script de divisao
-(21, 'Brigada Europeia de Defesa', 1200),          -- 1200
-(22, 'Força Tarefa Americana', 1500),             -- 1500
-(23, 'Dragões Asiáticos', 900),                   -- 900
-(24, 'Lobos do Ártico', 400),                     -- 400
-(25, 'Milícia da Fronteira Mexicana', 250);        -- 250
+(1, 'Exército de Libertação Nacional', 450),      
+(2, 'Forças Rebeldes Unidas', 500),               
+(3, 'Milícia Popular do Sul', 100),                
+(4, 'Guardiões da Fronteira Norte', 400),         
+(5, 'Legião Estrangeira Vermelha', 800),          
+(6, 'Brigada Fantasma', 50),                       
+(7, 'Comandos do Deserto', 200),                   
+(8, 'Divisão Sombra', 350),                       
+(9, 'Frente Patriótica Revolucionária', 250),     
+(10, 'Movimento pela Autodeterminação Popular', 600),
+(11, 'Resistência Armada do Povo', 700),            
+(12, 'União dos Combatentes Livres', 180),         
+(13, 'Força de Defesa Territorial Unificada', 450), 
+(14, 'Grupo de Intervenção Rápida Alfa', 320),    
+(15, 'Aliança Rebelde do Leste Profundo', 550),   
+(16, 'Combatentes pela Justiça Social Agora', 120),
+(17, 'Exército Secreto do Povo Soberano', 420),    
+(18, 'Guerrilha da Montanha Negra Indomável', 90),
+(19, 'Legião dos Oprimidos em Luta', 280),        
+(20, 'Vanguarda da Libertação Continental', 0),   
+(21, 'Brigada Europeia de Defesa', 1200),          
+(22, 'Força Tarefa Americana', 1500),             
+(23, 'Dragões Asiáticos', 900),                   
+(24, 'Lobos do Ártico', 400),                     
+(25, 'Milícia da Fronteira Mexicana', 250);        
 
--- Povoando a tabela divisao
+-- Povoando a tabela divisao (IDs sequenciais DENTRO de cada grupo)
 INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALUES
-(1, 1, 5, 2000, 50, 5, 300), (2, 1, 0, 1500, 30, 2, 150), (3, 2, 10, 3000, 70, 10, 500),
-(4, 3, 2, 1000, 20, 0, 100), (5, 4, 0, 2500, 60, 8, 400), (6, 5, 15, 5000, 100, 15, 800),
-(7, 6, 1, 800, 10, 1, 50), (8, 7, 0, 1200, 25, 3, 200), (9, 8, 8, 2200, 45, 7, 350),
-(10, 9, 3, 1800, 35, 4, 250), (11, 10, 0, 3500, 80, 12, 600), (12, 11, 20, 4000, 90, 20, 700),
-(13, 12, 4, 1600, 28, 6, 180), (14, 13, 0, 2800, 55, 9, 450), (15, 14, 6, 2000, 40, 5, 320),
-(16, 15, 12, 3200, 75, 11, 550), (17, 16, 0, 1300, 15, 0, 120), (18, 17, 7, 2700, 58, 8, 420),
-(19, 18, 2, 900, 18, 2, 90), (20, 19, 5, 1700, 33, 3, 280),
-(21, 21, 30, 10000, 200, 50, 1200), (22, 22, 50, 15000, 300, 70, 1500), (23, 23, 10, 8000, 150, 30, 900),
-(24, 24, 5, 3000, 80, 10, 400), (25, 25, 0, 2000, 40, 0, 250);
+(1, 1, 5, 2000, 50, 5, 300),    -- Grupo 1, Divisão 1
+(2, 1, 0, 1500, 30, 2, 150),    -- Grupo 1, Divisão 2
+(1, 2, 10, 3000, 70, 10, 500),   -- Grupo 2, Divisão 1
+(1, 3, 2, 1000, 20, 0, 100),    -- Grupo 3, Divisão 1
+(1, 4, 0, 2500, 60, 8, 400),    -- Grupo 4, Divisão 1
+(1, 5, 15, 5000, 100, 15, 800),   -- Grupo 5, Divisão 1
+(1, 6, 1, 800, 10, 1, 50),     -- Grupo 6, Divisão 1
+(1, 7, 0, 1200, 25, 3, 200),    -- Grupo 7, Divisão 1
+(1, 8, 8, 2200, 45, 7, 350),    -- Grupo 8, Divisão 1
+(1, 9, 3, 1800, 35, 4, 250),    -- Grupo 9, Divisão 1
+(1, 10, 0, 3500, 80, 12, 600),   -- Grupo 10, Divisão 1
+(1, 11, 20, 4000, 90, 20, 700),   -- Grupo 11, Divisão 1
+(1, 12, 4, 1600, 28, 6, 180),   -- Grupo 12, Divisão 1
+(1, 13, 0, 2800, 55, 9, 450),   -- Grupo 13, Divisão 1
+(1, 14, 6, 2000, 40, 5, 320),   -- Grupo 14, Divisão 1
+(1, 15, 12, 3200, 75, 11, 550),  -- Grupo 15, Divisão 1
+(1, 16, 0, 1300, 15, 0, 120),   -- Grupo 16, Divisão 1
+(1, 17, 7, 2700, 58, 8, 420),   -- Grupo 17, Divisão 1
+(1, 18, 2, 900, 18, 2, 90),    -- Grupo 18, Divisão 1
+(1, 19, 5, 1700, 33, 3, 280),   -- Grupo 19, Divisão 1
+-- Grupo 20 não tem divisões neste script
+(1, 21, 30, 10000, 200, 50, 1200), -- Grupo 21, Divisão 1
+(1, 22, 50, 15000, 300, 70, 1500), -- Grupo 22, Divisão 1
+(1, 23, 10, 8000, 150, 30, 900),  -- Grupo 23, Divisão 1
+(1, 24, 5, 3000, 80, 10, 400),   -- Grupo 24, Divisão 1
+(1, 25, 0, 2000, 40, 0, 250);    -- Grupo 25, Divisão 1
 
 -- Povoando a tabela lider_politico
 INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
@@ -152,22 +169,33 @@ INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
 ('Jean-Luc Picard', 21, 'Conselho da Federação Europeia'), ('James Kirk', 22, 'Congresso dos Estados Unidos'),
 ('Li Shang', 23, 'Comitê Central Asiático'), ('Sven Olafson', 24, 'Parlamento Nórdico Unificado'), ('Maria Sanchez', 25, 'Assembleia da Fronteira');
 
--- Povoando a tabela chefe_militar
+-- Povoando a tabela chefe_militar (referenciando os novos IDs de divisão)
 INSERT INTO chefe_militar (id, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) VALUES
-(DEFAULT, 'General de Brigada', 'Alistair Vance', 1, 1, 1), (DEFAULT, 'Coronel', 'Sofia Rostova', 2, 3, 2),
-(DEFAULT, 'Major-General', 'Kaelen', 3, 4, 3), (DEFAULT, 'Capitão', 'Lyra Moon', 4, 5, 4),
-(DEFAULT, 'Tenente-Coronel', 'Ivan Petrov', 5, 6, 5), (DEFAULT, 'General de Divisão', 'Anya Sharma', 6, 7, 6),
-(DEFAULT, 'Sargento-Mor', 'Omar Al-Jamil', 7, 8, 7), (DEFAULT, 'Major', 'Rex Nebula', 8, 9, 8),
-(DEFAULT, 'Coronel Pleno', 'Elena Petrova', 9, 10, 9), (DEFAULT, 'General', 'Kai Manu', 10, 11, 10),
-(DEFAULT, 'Comandante', 'Jian Li', 11, 12, 11), (DEFAULT, 'Almirante', 'Marcus Tiberius', 12, 13, 12),
-(DEFAULT, 'Tenente', 'Aisha Bello', 13, 14, 13), (DEFAULT, 'Brigadeiro', 'Zara Khan', 14, 15, 14),
-(DEFAULT, 'Capitão de Fragata', 'Viktor Orlov', 15, 16, 15), (DEFAULT, 'Marechal de Campo', 'Miguel Silva', 16, 17, 16),
-(DEFAULT, 'Cabo Mestre', '"Sombra"', 17, 18, 17), (DEFAULT, 'General de Exército', 'Urso Cinzento', 18, 19, 18),
-(DEFAULT, 'Aspirante-a-Oficial', 'Nzinga II', 19, 20, 19), 
-(DEFAULT, 'Comodoro', 'O Oráculo', 20, 20, 19),
-(DEFAULT, 'Marechal Europeu', 'Jean-Luc Picard', 21, 21, 21), (DEFAULT, 'General 5 Estrelas', 'James Kirk', 22, 22, 22),
-(DEFAULT, 'Grande Estrategista', 'Li Shang', 23, 23, 23), (DEFAULT, 'Comandante Nórdico', 'Sven Olafson', 24, 24, 24),
-(DEFAULT, 'Jefe de Plaza', 'Maria Sanchez', 25, 25, 25);
+(DEFAULT, 'General de Brigada', 'Alistair Vance', 1, 1, 1),      -- Comanda Divisão 1 do Grupo 1
+(DEFAULT, 'Coronel', 'Sofia Rostova', 2, 1, 2),                -- Comanda Divisão 1 do Grupo 2
+(DEFAULT, 'Major-General', 'Kaelen', 3, 1, 3),                  -- Comanda Divisão 1 do Grupo 3
+(DEFAULT, 'Capitão', 'Lyra Moon', 4, 1, 4),                      -- Comanda Divisão 1 do Grupo 4
+(DEFAULT, 'Tenente-Coronel', 'Ivan Petrov', 5, 1, 5),            -- Comanda Divisão 1 do Grupo 5
+(DEFAULT, 'General de Divisão', 'Anya Sharma', 6, 1, 6),          -- Comanda Divisão 1 do Grupo 6
+(DEFAULT, 'Sargento-Mor', 'Omar Al-Jamil', 7, 1, 7),             -- Comanda Divisão 1 do Grupo 7
+(DEFAULT, 'Major', 'Rex Nebula', 8, 1, 8),                      -- Comanda Divisão 1 do Grupo 8
+(DEFAULT, 'Coronel Pleno', 'Elena Petrova', 9, 1, 9),            -- Comanda Divisão 1 do Grupo 9
+(DEFAULT, 'General', 'Kai Manu', 10, 1, 10),                     -- Comanda Divisão 1 do Grupo 10
+(DEFAULT, 'Comandante', 'Jian Li', 11, 1, 11),                   -- Comanda Divisão 1 do Grupo 11
+(DEFAULT, 'Almirante', 'Marcus Tiberius', 12, 1, 12),             -- Comanda Divisão 1 do Grupo 12
+(DEFAULT, 'Tenente', 'Aisha Bello', 13, 1, 13),                   -- Comanda Divisão 1 do Grupo 13
+(DEFAULT, 'Brigadeiro', 'Zara Khan', 14, 1, 14),                 -- Comanda Divisão 1 do Grupo 14
+(DEFAULT, 'Capitão de Fragata', 'Viktor Orlov', 15, 1, 15),       -- Comanda Divisão 1 do Grupo 15
+(DEFAULT, 'Marechal de Campo', 'Miguel Silva', 16, 1, 16),        -- Comanda Divisão 1 do Grupo 16
+(DEFAULT, 'Cabo Mestre', '"Sombra"', 17, 1, 17),                  -- Comanda Divisão 1 do Grupo 17
+(DEFAULT, 'General de Exército', 'Urso Cinzento', 18, 1, 18),     -- Comanda Divisão 1 do Grupo 18
+(DEFAULT, 'Aspirante-a-Oficial', 'Nzinga II', 19, 1, 19),         -- Comanda Divisão 1 do Grupo 19
+(DEFAULT, 'Comodoro', 'O Oráculo', 20, 1, 19),                   -- Chefe do Oráculo (Grupo 20) comanda Divisão 1 do Grupo 19
+(DEFAULT, 'Marechal Europeu', 'Jean-Luc Picard', 21, 1, 21),     -- Comanda Divisão 1 do Grupo 21
+(DEFAULT, 'General 5 Estrelas', 'James Kirk', 22, 1, 22),       -- Comanda Divisão 1 do Grupo 22
+(DEFAULT, 'Grande Estrategista', 'Li Shang', 23, 1, 23),          -- Comanda Divisão 1 do Grupo 23
+(DEFAULT, 'Comandante Nórdico', 'Sven Olafson', 24, 1, 24),       -- Comanda Divisão 1 do Grupo 24
+(DEFAULT, 'Jefe de Plaza', 'Maria Sanchez', 25, 1, 25);          -- Comanda Divisão 1 do Grupo 25
 
 -- Povoando a tabela participa_grupo
 INSERT INTO participa_grupo (id_conflito, id_grupo, data_de_incorporacao, data_de_saida) VALUES
@@ -261,6 +289,4 @@ INSERT INTO dialoga (id_organizacao, nome_lider_politico, id_grupo_lider_politic
 (1, 'Alistair Vance', 1), (2, 'Sofia Rostova', 2),
 (8, 'Jean-Luc Picard', 21), (14, 'James Kirk', 22),
 (1, 'Li Shang', 23), (15, 'James Kirk', 22);
-
--- O bloco UPDATE para total_baixas foi removido, pois os valores agora são inseridos diretamente.
 
