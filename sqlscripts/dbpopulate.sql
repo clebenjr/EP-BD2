@@ -1,0 +1,250 @@
+-- Define o schema a ser utilizado
+SET search_path TO ep2_bd2;
+
+-- Povoando a tabela pais
+INSERT INTO pais (nome) VALUES
+('Brasil'), ('Angola'), ('Portugal'), ('Moçambique'), ('Cabo Verde'),
+('Guiné-Bissau'), ('São Tomé e Príncipe'), ('Timor-Leste'), ('Ucrânia'), ('Rússia'),
+('Sudão'), ('Colômbia'), ('Afeganistão'), ('Síria'), ('Iêmen'),
+('Myanmar'), ('Etiópia'), ('Nigéria'), ('Somália'), ('Palestina'),
+('Estados Unidos'), ('Canadá'), ('México'), ('Reino Unido'), ('França'),
+('Alemanha'), ('Polônia'), ('Sérvia'), ('China'), ('Índia'),
+('Geórgia'), ('Armênia'), ('Japão'), ('República de Azânia'), ('Bielorrússia'), ('Noruega');
+
+-- Povoando a tabela conflito
+-- IDs de 1 a 25
+INSERT INTO conflito (id, numero_de_mortos, numero_de_feridos, nome) VALUES
+(1, 150000, 300000, 'Guerra Civil da Nortúmbria'),
+(2, 75000, 150000, 'Conflito da Fronteira Escarlate'),
+(3, 30000, 60000, 'Insurreição do Vale Perdido'),
+(4, 120000, 240000, 'Guerra dos Balcãs Ocidentais'), 
+(5, 5000, 10000, 'Revolta dos Camponeses do Sul'),
+(6, 250000, 500000, 'Grande Guerra Continental Africana'),
+(7, 10000, 20000, 'Disputa das Ilhas Nebulosas do Atlântico'),
+(8, 45000, 90000, 'Cerco da Cidade Dourada'),
+(9, 8000, 16000, 'Levante dos Mineiros de Kessel'),
+(10, 60000, 120000, 'Guerra da Água Azul Profundo'),
+(11, 90000, 180000, 'Conflito da Floresta Sombria Eterna'),
+(12, 20000, 40000, 'Batalha dos Montes Gelados do Norte'),
+(13, 50000, 100000, 'Insurreição Popular do Leste Unido'),
+(14, 100000, 200000, 'Crise dos Refugiados da Fronteira Setentrional'), 
+(15, 15000, 30000, 'Rebelião dos Mercadores da Costa'),
+(16, 200000, 400000, 'Guerra da Secessão Ocidental Prolongada'),
+(17, 35000, 70000, 'Disputa Territorial do Rio Bravo Seco'),
+(18, 65000, 130000, 'Cerco da Fortaleza Ancestral Esquecida'),
+(19, 95000, 190000, 'Levante dos Clãs Unidos da Montanha'),
+(20, 40000, 80000, 'Guerra Santa da Montanha Sagrada Iluminada'),
+(21, 55000, 110000, 'Conflito Transfronteiriço do Cáucaso'), 
+(22, 85000, 170000, 'Guerra Comercial do Pacífico'), 
+(23, 25000, 50000, 'Intervenção na República de Azânia'), 
+(24, 15000, 35000, 'Crise de Estabilidade em Volhynia'), 
+(25, 45000, 95000, 'Disputa de Recursos no Ártico'); 
+
+-- Povoando a tabela afeta
+INSERT INTO afeta (nome_pais, id_conflito) VALUES
+('Ucrânia', 1), ('Rússia', 1), ('Palestina', 1), -- Palestina adicionada ao conflito 1
+('Sudão', 2), ('Etiópia', 2),
+('Colômbia', 3), ('Brasil', 3), ('Sérvia', 4), ('Portugal', 4), ('Polônia', 4),
+('Afeganistão', 5), ('Myanmar', 5), ('Nigéria', 6), ('Somália', 6),
+('Portugal', 7), ('Cabo Verde', 7), ('Angola', 8), ('Moçambique', 8),
+('Brasil', 9), ('Colômbia', 9), ('Timor-Leste', 10), ('Guiné-Bissau', 10),
+('Palestina', 11), ('Síria', 11), ('Rússia', 12), ('Ucrânia', 12),
+('Etiópia', 13), ('Sudão', 13),
+('Myanmar', 14), ('Afeganistão', 14), ('Estados Unidos', 14), ('Canadá', 14), ('México', 14),
+('Iêmen', 15), ('Somália', 15), ('Nigéria', 16), ('Cabo Verde', 16),
+('São Tomé e Príncipe', 17), ('Guiné-Bissau', 17), ('Angola', 18), ('Brasil', 18),
+('Angola', 19), ('Moçambique', 19), ('Palestina', 20), ('Síria', 20),
+('Rússia', 21), ('Geórgia', 21), ('Armênia', 21),
+('Estados Unidos', 22), ('China', 22), ('Japão', 22),
+('Estados Unidos', 23), ('França', 23), ('República de Azânia', 23),
+('Polônia', 24), ('Ucrânia', 24), ('Bielorrússia', 24),
+('Rússia', 25), ('Canadá', 25), ('Estados Unidos', 25), ('Noruega', 25);
+
+-- Povoando tabelas de causas de conflitos (GARANTINDO PELO MENOS UMA CAUSA POR CONFLITO)
+INSERT INTO regioes_conflito (id_conflito, regiao) VALUES
+(1, 'Norte da Ucrânia'), -- Conflito 1 já era territorial, mantido
+(4, 'Kosovo'), (4, 'Bósnia'),                 
+(7, 'Ilhas Selvagens'),                        
+(12, 'Donbass'),                               
+(17, 'Margem do Rio Apa'),                     
+(21, 'Ossétia do Sul'),                        
+(24, 'Lviv Oblast');                           
+
+INSERT INTO materias_primas_conflito (id_conflito, materia_prima) VALUES 
+(2, 'Petróleo'), (2, 'Água'),                 
+(3, 'Ouro'), (3, 'Esmeraldas'),               
+(6, 'Petróleo'), (6, 'Gás Natural'),          
+(9, 'Coltan'),                                
+(10, 'Fosfato'),                               
+(15, 'Controle de Rotas Marítimas'),          
+(22, 'Semicondutores'), (22, 'Terras Raras'), 
+(25, 'Gás Natural Ártico');                   
+
+INSERT INTO religioes_conflito (id_conflito, religiao) VALUES
+(1, 'Disputa de Locais Sagrados Antigos'), -- Conflito 1 agora também é religioso
+(4, 'Cristianismo Ortodoxo Sérvio'), (4, 'Islamismo Bósnio'), 
+(8, 'Culto do Sol Dourado'), (8, 'Fé da Lua Prateada'), 
+(11, 'Judaísmo'), (11, 'Islamismo'),          
+(16, 'Separatismo Religioso Ocidental'),      
+(20, 'Fé Ancestral da Montanha');             
+
+INSERT INTO etnias_conflito (id_conflito, etnia) VALUES
+(5, 'Pashtun'), (5, 'Hazara'),                 
+(13, 'Oromo'), (13, 'Amhara'),                 
+(14, 'Anglo-Descendentes (Exemplo)'), (14, 'Latino-Americanos (Exemplo)'), 
+(18, 'Clã da Pedra'), (18, 'Povo do Rio'),    
+(19, 'Bakongo'), (19, 'Luba'),                 
+(23, 'Azanianos Nativos'), (23, 'Colonizadores (Exemplo)'); 
+
+
+-- Povoando a tabela grupo_armado (25 grupos)
+INSERT INTO grupo_armado (id, nome) VALUES
+(1, 'Exército de Libertação Nacional'), (2, 'Forças Rebeldes Unidas'), (3, 'Milícia Popular do Sul'),
+(4, 'Guardiões da Fronteira Norte'), (5, 'Legião Estrangeira Vermelha'), (6, 'Brigada Fantasma'),
+(7, 'Comandos do Deserto'), (8, 'Divisão Sombra'), (9, 'Frente Patriótica Revolucionária'),
+(10, 'Movimento pela Autodeterminação Popular'), (11, 'Resistência Armada do Povo'), (12, 'União dos Combatentes Livres'),
+(13, 'Força de Defesa Territorial Unificada'), (14, 'Grupo de Intervenção Rápida Alfa'), (15, 'Aliança Rebelde do Leste Profundo'),
+(16, 'Combatentes pela Justiça Social Agora'), (17, 'Exército Secreto do Povo Soberano'), (18, 'Guerrilha da Montanha Negra Indomável'),
+(19, 'Legião dos Oprimidos em Luta'), (20, 'Vanguarda da Libertação Continental'),
+(21, 'Brigada Europeia de Defesa'), (22, 'Força Tarefa Americana'), (23, 'Dragões Asiáticos'), (24, 'Lobos do Ártico'), (25, 'Milícia da Fronteira Mexicana');
+
+-- Povoando a tabela divisao (25 divisões)
+INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALUES
+(1, 1, 5, 2000, 50, 5, 300), (2, 1, 0, 1500, 30, 2, 150), (3, 2, 10, 3000, 70, 10, 500),
+(4, 3, 2, 1000, 20, 0, 100), (5, 4, 0, 2500, 60, 8, 400), (6, 5, 15, 5000, 100, 15, 800),
+(7, 6, 1, 800, 10, 1, 50), (8, 7, 0, 1200, 25, 3, 200), (9, 8, 8, 2200, 45, 7, 350),
+(10, 9, 3, 1800, 35, 4, 250), (11, 10, 0, 3500, 80, 12, 600), (12, 11, 20, 4000, 90, 20, 700),
+(13, 12, 4, 1600, 28, 6, 180), (14, 13, 0, 2800, 55, 9, 450), (15, 14, 6, 2000, 40, 5, 320),
+(16, 15, 12, 3200, 75, 11, 550), (17, 16, 0, 1300, 15, 0, 120), (18, 17, 7, 2700, 58, 8, 420),
+(19, 18, 2, 900, 18, 2, 90), (20, 19, 5, 1700, 33, 3, 280),
+(21, 21, 30, 10000, 200, 50, 1200), (22, 22, 50, 15000, 300, 70, 1500), (23, 23, 10, 8000, 150, 30, 900),
+(24, 24, 5, 3000, 80, 10, 400), (25, 25, 0, 2000, 40, 0, 250);
+
+-- Povoando a tabela lider_politico (25 líderes)
+INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
+('Alistair Vance', 1, 'Apoio popular e veteranos de guerra'), ('Sofia Rostova', 2, 'Apoio de dissidentes e intelectuais'),
+('Kaelen', 3, 'Apoio de milícias locais e agricultores'), ('Lyra Moon', 4, 'Apoio de comerciantes e guardas fronteiriços'),
+('Ivan Petrov', 5, 'Apoio de mercenários e exilados'), ('Anya Sharma', 6, 'Apoio de espiões e unidades de elite'),
+('Omar Al-Jamil', 7, 'Apoio de tribos do deserto e nômades'), ('Rex Nebula', 8, 'Apoio de unidades de reconhecimento'),
+('Elena Petrova', 9, 'Apoio de nacionalistas e industriais'), ('Kai Manu', 10, 'Apoio de minorias étnicas e ativistas'),
+('Jian Li', 11, 'Apoio de estudantes e trabalhadores urbanos'), ('Marcus Tiberius', 12, 'Apoio de legiões leais'),
+('Aisha Bello', 13, 'Apoio de comunidades rurais e defensores'), ('Zara Khan', 14, 'Apoio de forças especiais e tecnocratas'),
+('Viktor Orlov', 15, 'Apoio de aristocratas e senhores feudais'), ('Miguel Silva', 16, 'Apoio de comunidades religiosas'),
+('"Sombra"', 17, 'Apoio de redes clandestinas e informantes'), ('Urso Cinzento', 18, 'Apoio de tribos montanhesas'),
+('Nzinga II', 19, 'Apoio de matriarcas e guerreiras'), ('O Oráculo', 20, 'Apoio de visionários e místicos'),
+('Jean-Luc Picard', 21, 'Conselho da Federação Europeia'), ('James Kirk', 22, 'Congresso dos Estados Unidos'),
+('Li Shang', 23, 'Comitê Central Asiático'), ('Sven Olafson', 24, 'Parlamento Nórdico Unificado'), ('Maria Sanchez', 25, 'Assembleia da Fronteira');
+
+-- Povoando a tabela chefe_militar
+INSERT INTO chefe_militar (id, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao) VALUES
+(1, 'General de Brigada', 'Alistair Vance', 1, 1), (2, 'Coronel', 'Sofia Rostova', 2, 3),
+(3, 'Major-General', 'Kaelen', 3, 4), (4, 'Capitão', 'Lyra Moon', 4, 5),
+(5, 'Tenente-Coronel', 'Ivan Petrov', 5, 6), (6, 'General de Divisão', 'Anya Sharma', 6, 7),
+(7, 'Sargento-Mor', 'Omar Al-Jamil', 7, 8), (8, 'Major', 'Rex Nebula', 8, 9),
+(9, 'Coronel Pleno', 'Elena Petrova', 9, 10), (10, 'General', 'Kai Manu', 10, 11),
+(11, 'Comandante', 'Jian Li', 11, 12), (12, 'Almirante', 'Marcus Tiberius', 12, 13),
+(13, 'Tenente', 'Aisha Bello', 13, 14), (14, 'Brigadeiro', 'Zara Khan', 14, 15),
+(15, 'Capitão de Fragata', 'Viktor Orlov', 15, 16), (16, 'Marechal de Campo', 'Miguel Silva', 16, 17),
+(17, 'Cabo Mestre', '"Sombra"', 17, 18), (18, 'General de Exército', 'Urso Cinzento', 18, 19),
+(19, 'Aspirante-a-Oficial', 'Nzinga II', 19, 20), 
+(20, 'Comodoro', 'O Oráculo', 20, 20),
+(21, 'Marechal Europeu', 'Jean-Luc Picard', 21, 21), (22, 'General 5 Estrelas', 'James Kirk', 22, 22),
+(23, 'Grande Estrategista', 'Li Shang', 23, 23), (24, 'Comandante Nórdico', 'Sven Olafson', 24, 24),
+(25, 'Jefe de Plaza', 'Maria Sanchez', 25, 25);
+
+-- Povoando a tabela participa_grupo
+INSERT INTO participa_grupo (id_conflito, id_grupo, data_de_incorporacao, data_de_saida) VALUES
+(1, 1, '2022-02-24', NULL), (1, 2, '2022-03-01', NULL), (1, 5, '2022-04-10', '2023-01-20'),
+(4, 21, '2023-01-01', NULL), (4, 5, '2023-02-01', NULL),
+(14, 4, '2024-01-01', NULL), (14, 22, '2024-01-05', NULL), (14, 25, '2024-01-10', NULL),
+(22, 22, '2025-01-01', NULL), (22, 23, '2025-01-01', NULL),
+(23, 22, '2024-06-01', NULL), (23, 21, '2024-06-05', NULL),
+(25, 22, '2026-01-01', NULL), (25, 24, '2026-01-01', NULL), (25, 1, '2026-02-01', NULL);
+
+-- Povoando a tabela arma
+INSERT INTO arma (tipo, capacidade_destrutiva) VALUES
+('Fuzil de Assalto AKM', 7), ('Pistola Makarov PM', 4), ('Granada F1', 7),
+('Morteiro 2B14 Podnos', 9), ('RPG-7', 8), ('Metralhadora PKM', 8),
+('Mina Antipessoal PMN-2', 7), ('Faca de Combate NR-40', 3), ('Bomba Improvisada (IED)', 9),
+('Rifle de Precisão SVD Dragunov', 8), ('Submetralhadora PPSh-41', 6), ('Canhão Antiaéreo ZU-23-2', 9),
+('Míssil Antitanque 9M133 Kornet', 9), ('Drone de Ataque Shahed-136', 8), ('Gás Lacrimogêneo K-51', 2),
+('C4 Explosivo Plástico', 9), ('Coquetel Molotov', 5), ('Espingarda Saiga-12', 7),
+('Lança-Granadas AGS-17', 9), ('Míssil Terra-Ar S-300', 10),
+('Barret M82', 8), ('M200 Intervention', 8), ('Fuzil M16', 7), ('Caça F-35', 10), ('Tanque M1 Abrams', 9);
+
+-- Povoando a tabela traficante
+INSERT INTO traficante (nome) VALUES
+('Viktor Bout'), ('Monzer al-Kassar'), ('Adnan Khashoggi'), ('Semyon Mogilevich'),
+('Rafael Caro Quintero'), ('Joaquín "El Chapo" Guzmán'), ('Khun Sa'), ('Pablo Escobar'),
+('Griselda Blanco'), ('Ismael "El Mayo" Zambada'), ('Carlos Lehder'), ('George Jung'),
+('Frank Lucas'), ('Nicky Barnes'), ('Artur "O Rei" Almeida'), ('Fernanda "A Dama de Ferro" Costa'),
+('Ricardo "O Fantasma" Silva'), ('Beatriz "A Viúva Negra" Oliveira'), ('Tiago "O Negociador" Pereira'), ('Sofia "A Serpente" Lima'),
+('John Doe Arms LLC'), ('EuroArms Corp');
+
+-- Povoando a tabela possui_arma_traficante
+INSERT INTO possui_arma_traficante (tipo_arma, nome_traficante, quantidade_disponivel) VALUES
+('Fuzil de Assalto AKM', 'Viktor Bout', 5000), ('Pistola Makarov PM', 'Monzer al-Kassar', 2000),
+('Granada F1', 'Adnan Khashoggi', 10000), ('Barret M82', 'Viktor Bout', 150),
+('Fuzil M16', 'John Doe Arms LLC', 10000), ('Caça F-35', 'John Doe Arms LLC', 50),
+('Tanque M1 Abrams', 'EuroArms Corp', 200), ('Míssil Antitanque 9M133 Kornet', 'EuroArms Corp', 500),
+('M200 Intervention', 'Monzer al-Kassar', 100), 
+('Barret M82', 'Artur "O Rei" Almeida', 50), 
+('M200 Intervention', 'Sofia "A Serpente" Lima', 30);
+
+
+-- Povoando a tabela fornece_arma_grupo (Total acumulado, quantidade > 0)
+INSERT INTO fornece_arma_grupo (id_grupo_armado, tipo_arma, nome_traficante, quantidade_fornecida) VALUES
+(1, 'Fuzil de Assalto AKM', 'Viktor Bout', 1500), 
+(2, 'Pistola Makarov PM', 'Monzer al-Kassar', 500),
+(22, 'Fuzil M16', 'John Doe Arms LLC', 5000), 
+(22, 'Tanque M1 Abrams', 'John Doe Arms LLC', 50),
+(21, 'Míssil Antitanque 9M133 Kornet', 'EuroArms Corp', 100),
+
+-- Fornecimentos de Barret M82 (3 distintos para a query)
+(1, 'Barret M82', 'Viktor Bout', 20),             
+(10, 'Barret M82', 'Artur "O Rei" Almeida', 10),  
+(2, 'Barret M82', 'Adnan Khashoggi', 25),         
+
+-- Fornecimentos de M200 Intervention (3 distintos para a query)
+(5, 'M200 Intervention', 'Monzer al-Kassar', 15),  
+(15, 'M200 Intervention', 'Sofia "A Serpente" Lima', 5), 
+(7, 'M200 Intervention', 'Semyon Mogilevich', 12);
+
+
+-- Povoando a tabela organizacao_mediadora
+INSERT INTO organizacao_mediadora (id, nome, tipo) VALUES
+(1, 'Organização das Nações Unidas (ONU)', 'Internacional'),
+(2, 'Comitê Internacional da Cruz Vermelha (CICV)', 'Internacional'),
+(3, 'Médicos Sem Fronteiras (MSF)', 'Não Governamental'),
+(4, 'Anistia Internacional', 'Não Governamental'),
+(5, 'Human Rights Watch (HRW)', 'Não Governamental'),
+(6, 'União Africana (UA)', 'Internacional'),
+(7, 'Liga dos Estados Árabes', 'Internacional'),
+(8, 'Organização para a Segurança e Cooperação na Europa (OSCE)', 'Internacional'),
+(9, 'Centro Carter', 'Não Governamental'),
+(10, 'Comunidade de Sant''Egídio', 'Não Governamental'),
+(11, 'Agência dos EUA para o Desenvolvimento Internacional (USAID)', 'Governamental'),
+(12, 'Ministério das Relações Exteriores da Noruega', 'Governamental'),
+(13, 'Ministério das Relações Exteriores da Alemanha', 'Governamental'),
+(14, 'OTAN (Organização do Tratado do Atlântico Norte)', 'Internacional'),
+(15, 'Departamento de Estado dos EUA', 'Governamental'),
+(19, 'Alto Comissariado das Nações Unidas para os Refugiados (ACNUR)', 'Internacional');
+
+-- Povoando a tabela depende_organizacao
+INSERT INTO depende_organizacao (id_organizacao_mediada, id_organizacao_mediadora) VALUES
+(6, 1), (7, 1), (2,1), (3,2), (4,1), (19,1),
+(8, 14), (11, 15), (12, 8);
+
+-- Povoando a tabela participa_organizacao
+INSERT INTO participa_organizacao (id_conflito, id_organizacao, data_incorporacao, data_saida, tipo_ajuda, numero_pessoas) VALUES
+(1, 1, '2022-03-01', NULL, 'Diplomática', 50), (1, 2, '2022-02-28', NULL, 'Médica', 200),
+(4, 8, '2023-01-15', NULL, 'Diplomática', 40), (4, 14, '2023-02-01', NULL, 'Presencial', 100),
+(14, 1, '2024-01-20', NULL, 'Diplomática', 60), (14, 11, '2024-02-01', NULL, 'Médica', 250),
+(22, 1, '2025-01-10', NULL, 'Diplomática', 30),
+(23, 15, '2024-06-10', NULL, 'Diplomática', 20), (23, 1, '2024-06-15', NULL, 'Presencial', 15);
+
+-- Povoando a tabela dialoga
+INSERT INTO dialoga (id_organizacao, nome_lider_politico, id_grupo_lider_politico) VALUES
+(1, 'Alistair Vance', 1), (2, 'Sofia Rostova', 2),
+(8, 'Jean-Luc Picard', 21), (14, 'James Kirk', 22),
+(1, 'Li Shang', 23), (15, 'James Kirk', 22);
