@@ -104,10 +104,12 @@ CREATE TABLE chefe_militar (
     id_grupo_lider_politico INTEGER NOT NULL, -- ID do grupo desse líder político
     id_divisao INTEGER NOT NULL, -- Garante que um chefe militar lidera no máximo uma divisão
                                -- Pode ser NULL se o chefe não estiver atualmente comandando uma divisão específica
+   id_grupo_armado_divisao INTEGER NOT NULL,
    UNIQUE (nome_lider_politico, id_grupo_lider_politico),
     FOREIGN KEY (nome_lider_politico, id_grupo_lider_politico) REFERENCES lider_politico(nome, id_grupo) ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (id_divisao) REFERENCES divisao(id) ON DELETE SET NULL ON UPDATE CASCADE -- Se a divisão for excluída, o chefe fica sem divisão (ou poderia ser RESTRICT)
+    FOREIGN KEY (id_divisao, id_grupo_armado_divisao) REFERENCES divisao(id) ON DELETE CASCADE ON UPDATE CASCADE -- Se a divisão for excluída, o chefe fica sem divisão (ou poderia ser RESTRICT)
 );
+
 
 -- Participação dos grupos nos conflitos
 CREATE TABLE participa_grupo (

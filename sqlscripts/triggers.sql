@@ -45,9 +45,10 @@ BEGIN
     -- Após uma deleção, verifica se o conflito afetado ainda tem pelo menos 2 grupos.
     -- Esta lógica não impede a criação de um conflito com menos de 2 grupos,
     -- apenas a redução abaixo de 2 para um conflito que já existia com >= 2 grupos.
-    SELECT COUNT(DISTINCT id_grupo) INTO grupo_count
+   SELECT COUNT(*) INTO grupo_count
     FROM ep2_bd2.participa_grupo
-    WHERE id_conflito = OLD.id_conflito;
+    WHERE id_conflito = OLD.id_conflito
+      AND data_de_saida IS NULL; -- Adicionada condição para contar apenas grupos ativos
 
     IF grupo_count < 2 THEN
         RAISE EXCEPTION 'Operação inválida: O conflito ID % deve ter pelo menos dois grupos armados participando. Após esta operação, teria %.',
