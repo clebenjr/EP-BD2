@@ -97,22 +97,35 @@ INSERT INTO etnias_conflito (id_conflito, etnia) VALUES
 (23, 'Azanianos Nativos'), (23, 'Colonizadores (Exemplo)'); 
 
 
--- Povoando a tabela grupo_armado (25 grupos)
-INSERT INTO grupo_armado (id, nome) VALUES
-(1, 'Exército de Libertação Nacional'), (2, 'Forças Rebeldes Unidas'), (3, 'Milícia Popular do Sul'),
-(4, 'Guardiões da Fronteira Norte'), (5, 'Legião Estrangeira Vermelha'), (6, 'Brigada Fantasma'),
-(7, 'Comandos do Deserto'), (8, 'Divisão Sombra'), (9, 'Frente Patriótica Revolucionária'),
-(10, 'Movimento pela Autodeterminação Popular'), (11, 'Resistência Armada do Povo'), (12, 'União dos Combatentes Livres'),
-(13, 'Força de Defesa Territorial Unificada'), (14, 'Grupo de Intervenção Rápida Alfa'), (15, 'Aliança Rebelde do Leste Profundo'),
-(16, 'Combatentes pela Justiça Social Agora'), (17, 'Exército Secreto do Povo Soberano'), (18, 'Guerrilha da Montanha Negra Indomável'),
-(19, 'Legião dos Oprimidos em Luta'), (20, 'Vanguarda da Libertação Continental'),
-(21, 'Brigada Europeia de Defesa'), (22, 'Força Tarefa Americana'), (23, 'Dragões Asiáticos'), (24, 'Lobos do Ártico'), (25, 'Milícia da Fronteira Mexicana');
+-- Povoando a tabela grupo_armado com total_baixas calculado
+INSERT INTO grupo_armado (id, nome, total_baixas) VALUES
+(1, 'Exército de Libertação Nacional', 450),      -- 300 + 150
+(2, 'Forças Rebeldes Unidas', 500),               -- 500
+(3, 'Milícia Popular do Sul', 100),                -- 100
+(4, 'Guardiões da Fronteira Norte', 400),         -- 400
+(5, 'Legião Estrangeira Vermelha', 800),          -- 800
+(6, 'Brigada Fantasma', 50),                       -- 50
+(7, 'Comandos do Deserto', 200),                   -- 200
+(8, 'Divisão Sombra', 350),                       -- 350
+(9, 'Frente Patriótica Revolucionária', 250),     -- 250
+(10, 'Movimento pela Autodeterminação Popular', 600),-- 600
+(11, 'Resistência Armada do Povo', 700),            -- 700
+(12, 'União dos Combatentes Livres', 180),         -- 180
+(13, 'Força de Defesa Territorial Unificada', 450), -- 450
+(14, 'Grupo de Intervenção Rápida Alfa', 320),    -- 320
+(15, 'Aliança Rebelde do Leste Profundo', 550),   -- 550
+(16, 'Combatentes pela Justiça Social Agora', 120),-- 120
+(17, 'Exército Secreto do Povo Soberano', 420),    -- 420
+(18, 'Guerrilha da Montanha Negra Indomável', 90),-- 90
+(19, 'Legião dos Oprimidos em Luta', 280),        -- 280
+(20, 'Vanguarda da Libertação Continental', 0),   -- Nenhuma divisão associada no script de divisao
+(21, 'Brigada Europeia de Defesa', 1200),          -- 1200
+(22, 'Força Tarefa Americana', 1500),             -- 1500
+(23, 'Dragões Asiáticos', 900),                   -- 900
+(24, 'Lobos do Ártico', 400),                     -- 400
+(25, 'Milícia da Fronteira Mexicana', 250);        -- 250
 
--- Povoando a tabela divisao (25 divisões)
--- No script de criação, a PK de divisao é (id, id_grupo) e 'id' não é SERIAL.
--- Para manter a consistência com o povoamento anterior, vamos assumir que 'id' se refere a um número
--- sequencial dentro do grupo, ou um identificador único para a divisão que também é usado como 'id_divisao' em chefe_militar.
--- Para este script, vamos manter os IDs de 1 a 25 como o 'id' da divisão, e o 'id_grupo' associado.
+-- Povoando a tabela divisao
 INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALUES
 (1, 1, 5, 2000, 50, 5, 300), (2, 1, 0, 1500, 30, 2, 150), (3, 2, 10, 3000, 70, 10, 500),
 (4, 3, 2, 1000, 20, 0, 100), (5, 4, 0, 2500, 60, 8, 400), (6, 5, 15, 5000, 100, 15, 800),
@@ -124,7 +137,7 @@ INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALU
 (21, 21, 30, 10000, 200, 50, 1200), (22, 22, 50, 15000, 300, 70, 1500), (23, 23, 10, 8000, 150, 30, 900),
 (24, 24, 5, 3000, 80, 10, 400), (25, 25, 0, 2000, 40, 0, 250);
 
--- Povoando a tabela lider_politico (25 líderes)
+-- Povoando a tabela lider_politico
 INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
 ('Alistair Vance', 1, 'Apoio popular e veteranos de guerra'), ('Sofia Rostova', 2, 'Apoio de dissidentes e intelectuais'),
 ('Kaelen', 3, 'Apoio de milícias locais e agricultores'), ('Lyra Moon', 4, 'Apoio de comerciantes e guardas fronteiriços'),
@@ -139,34 +152,22 @@ INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
 ('Jean-Luc Picard', 21, 'Conselho da Federação Europeia'), ('James Kirk', 22, 'Congresso dos Estados Unidos'),
 ('Li Shang', 23, 'Comitê Central Asiático'), ('Sven Olafson', 24, 'Parlamento Nórdico Unificado'), ('Maria Sanchez', 25, 'Assembleia da Fronteira');
 
--- Povoando a tabela chefe_militar (FK para divisao(id, id_grupo))
--- id é SERIAL para chefe_militar
-INSERT INTO chefe_militar (faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) VALUES
-('General de Brigada', 'Alistair Vance', 1, 1, 1), 
-('Coronel', 'Sofia Rostova', 2, 3, 2),
-('Major-General', 'Kaelen', 3, 4, 3), 
-('Capitão', 'Lyra Moon', 4, 5, 4),
-('Tenente-Coronel', 'Ivan Petrov', 5, 6, 5), 
-('General de Divisão', 'Anya Sharma', 6, 7, 6),
-('Sargento-Mor', 'Omar Al-Jamil', 7, 8, 7), 
-('Major', 'Rex Nebula', 8, 9, 8),
-('Coronel Pleno', 'Elena Petrova', 9, 10, 9), 
-('General', 'Kai Manu', 10, 11, 10),
-('Comandante', 'Jian Li', 11, 12, 11), 
-('Almirante', 'Marcus Tiberius', 12, 13, 12),
-('Tenente', 'Aisha Bello', 13, 14, 13), 
-('Brigadeiro', 'Zara Khan', 14, 15, 14),
-('Capitão de Fragata', 'Viktor Orlov', 15, 16, 15), 
-('Marechal de Campo', 'Miguel Silva', 16, 17, 16),
-('Cabo Mestre', '"Sombra"', 17, 18, 17), 
-('General de Exército', 'Urso Cinzento', 18, 19, 18),
-('Aspirante-a-Oficial', 'Nzinga II', 19, 20, 19), 
-('Comodoro', 'O Oráculo', 20, 20, 19), -- Chefe do Oráculo comanda a divisão 20 do grupo 19
-('Marechal Europeu', 'Jean-Luc Picard', 21, 21, 21), 
-('General 5 Estrelas', 'James Kirk', 22, 22, 22),
-('Grande Estrategista', 'Li Shang', 23, 23, 23), 
-('Comandante Nórdico', 'Sven Olafson', 24, 24, 24),
-('Jefe de Plaza', 'Maria Sanchez', 25, 25, 25);
+-- Povoando a tabela chefe_militar
+INSERT INTO chefe_militar (id, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) VALUES
+(DEFAULT, 'General de Brigada', 'Alistair Vance', 1, 1, 1), (DEFAULT, 'Coronel', 'Sofia Rostova', 2, 3, 2),
+(DEFAULT, 'Major-General', 'Kaelen', 3, 4, 3), (DEFAULT, 'Capitão', 'Lyra Moon', 4, 5, 4),
+(DEFAULT, 'Tenente-Coronel', 'Ivan Petrov', 5, 6, 5), (DEFAULT, 'General de Divisão', 'Anya Sharma', 6, 7, 6),
+(DEFAULT, 'Sargento-Mor', 'Omar Al-Jamil', 7, 8, 7), (DEFAULT, 'Major', 'Rex Nebula', 8, 9, 8),
+(DEFAULT, 'Coronel Pleno', 'Elena Petrova', 9, 10, 9), (DEFAULT, 'General', 'Kai Manu', 10, 11, 10),
+(DEFAULT, 'Comandante', 'Jian Li', 11, 12, 11), (DEFAULT, 'Almirante', 'Marcus Tiberius', 12, 13, 12),
+(DEFAULT, 'Tenente', 'Aisha Bello', 13, 14, 13), (DEFAULT, 'Brigadeiro', 'Zara Khan', 14, 15, 14),
+(DEFAULT, 'Capitão de Fragata', 'Viktor Orlov', 15, 16, 15), (DEFAULT, 'Marechal de Campo', 'Miguel Silva', 16, 17, 16),
+(DEFAULT, 'Cabo Mestre', '"Sombra"', 17, 18, 17), (DEFAULT, 'General de Exército', 'Urso Cinzento', 18, 19, 18),
+(DEFAULT, 'Aspirante-a-Oficial', 'Nzinga II', 19, 20, 19), 
+(DEFAULT, 'Comodoro', 'O Oráculo', 20, 20, 19),
+(DEFAULT, 'Marechal Europeu', 'Jean-Luc Picard', 21, 21, 21), (DEFAULT, 'General 5 Estrelas', 'James Kirk', 22, 22, 22),
+(DEFAULT, 'Grande Estrategista', 'Li Shang', 23, 23, 23), (DEFAULT, 'Comandante Nórdico', 'Sven Olafson', 24, 24, 24),
+(DEFAULT, 'Jefe de Plaza', 'Maria Sanchez', 25, 25, 25);
 
 -- Povoando a tabela participa_grupo
 INSERT INTO participa_grupo (id_conflito, id_grupo, data_de_incorporacao, data_de_saida) VALUES
@@ -225,26 +226,26 @@ INSERT INTO fornece_arma_grupo (id_grupo_armado, tipo_arma, nome_traficante, qua
 
 -- Povoando a tabela organizacao_mediadora
 INSERT INTO organizacao_mediadora (id, nome, tipo) VALUES
-(1, 'Organização das Nações Unidas (ONU)', 'Internacional'),
-(2, 'Comitê Internacional da Cruz Vermelha (CICV)', 'Internacional'),
-(3, 'Médicos Sem Fronteiras (MSF)', 'Não Governamental'),
-(4, 'Anistia Internacional', 'Não Governamental'),
-(5, 'Human Rights Watch (HRW)', 'Não Governamental'),
-(6, 'União Africana (UA)', 'Internacional'),
-(7, 'Liga dos Estados Árabes', 'Internacional'),
-(8, 'Organização para a Segurança e Cooperação na Europa (OSCE)', 'Internacional'),
-(9, 'Centro Carter', 'Não Governamental'),
-(10, 'Comunidade de Sant''Egídio', 'Não Governamental'),
-(11, 'Agência dos EUA para o Desenvolvimento Internacional (USAID)', 'Governamental'),
-(12, 'Ministério das Relações Exteriores da Noruega', 'Governamental'),
-(13, 'Ministério das Relações Exteriores da Alemanha', 'Governamental'),
-(14, 'OTAN (Organização do Tratado do Atlântico Norte)', 'Internacional'),
-(15, 'Departamento de Estado dos EUA', 'Governamental'),
-(19, 'Alto Comissariado das Nações Unidas para os Refugiados (ACNUR)', 'Internacional');
+(DEFAULT, 'Organização das Nações Unidas (ONU)', 'Internacional'),
+(DEFAULT, 'Comitê Internacional da Cruz Vermelha (CICV)', 'Internacional'),
+(DEFAULT, 'Médicos Sem Fronteiras (MSF)', 'Não Governamental'),
+(DEFAULT, 'Anistia Internacional', 'Não Governamental'),
+(DEFAULT, 'Human Rights Watch (HRW)', 'Não Governamental'),
+(DEFAULT, 'União Africana (UA)', 'Internacional'),
+(DEFAULT, 'Liga dos Estados Árabes', 'Internacional'),
+(DEFAULT, 'Organização para a Segurança e Cooperação na Europa (OSCE)', 'Internacional'),
+(DEFAULT, 'Centro Carter', 'Não Governamental'),
+(DEFAULT, 'Comunidade de Sant''Egídio', 'Não Governamental'),
+(DEFAULT, 'Agência dos EUA para o Desenvolvimento Internacional (USAID)', 'Governamental'),
+(DEFAULT, 'Ministério das Relações Exteriores da Noruega', 'Governamental'),
+(DEFAULT, 'Ministério das Relações Exteriores da Alemanha', 'Governamental'),
+(DEFAULT, 'OTAN (Organização do Tratado do Atlântico Norte)', 'Internacional'),
+(DEFAULT, 'Departamento de Estado dos EUA', 'Governamental'),
+(DEFAULT, 'Alto Comissariado das Nações Unidas para os Refugiados (ACNUR)', 'Internacional');
 
 -- Povoando a tabela depende_organizacao
 INSERT INTO depende_organizacao (id_organizacao_mediada, id_organizacao_mediadora) VALUES
-(6, 1), (7, 1), (2,1), (3,2), (4,1), (19,1),
+(6, 1), (7, 1), (2,1), (3,2), (4,1), (16,1), 
 (8, 14), (11, 15), (12, 8);
 
 -- Povoando a tabela participa_organizacao
@@ -260,4 +261,6 @@ INSERT INTO dialoga (id_organizacao, nome_lider_politico, id_grupo_lider_politic
 (1, 'Alistair Vance', 1), (2, 'Sofia Rostova', 2),
 (8, 'Jean-Luc Picard', 21), (14, 'James Kirk', 22),
 (1, 'Li Shang', 23), (15, 'James Kirk', 22);
+
+-- O bloco UPDATE para total_baixas foi removido, pois os valores agora são inseridos diretamente.
 
