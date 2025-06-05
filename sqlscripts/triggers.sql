@@ -134,14 +134,14 @@ BEGIN
         -- Para simplicidade, aqui calcula o próximo MAX.
         -- Em cenários de alta concorrência, uma sequence do PostgreSQL por grupo ou
         -- advisory locks podem ser considerados.
-        SELECT COALESCE(MAX(numero_divisao_no_grupo), 0) + 1 INTO next_seq
+        SELECT COALESCE(MAX(id), 0) + 1 INTO next_seq
         FROM ep2_bd2.divisao
         WHERE id_grupo = NEW.id_grupo;
         -- Adicionar FOR UPDATE na query acima se houver transações concorrentes que possam causar problemas.
         -- Ex: FROM ep2_bd2.divisao WHERE id_grupo = NEW.id_grupo FOR UPDATE;
         -- Isso bloquearia as linhas do grupo específico.
 
-        NEW.numero_divisao_no_grupo := next_seq;
+        NEW.id := next_seq;
     END IF;
     RETURN NEW;
 END;
