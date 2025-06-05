@@ -105,20 +105,20 @@ EXECUTE FUNCTION fn_update_grupo_total_baixas();
 
 
 -- 4. Trigger: Gerar e assegurar a sequencialidade do número de divisão dentro do grupo armado.
--- Pré-requisito: A coluna 'numero_divisao_no_grupo' existe na tabela 'divisao'
--- e existe uma constraint UNIQUE(id_grupo, numero_divisao_no_grupo) nela.
-CREATE OR REPLACE FUNCTION fn_set_numero_divisao_no_grupo()
+-- Pré-requisito: A coluna 'id' existe na tabela 'divisao'
+-- e existe uma constraint UNIQUE(id_grupo, id) nela.
+CREATE OR REPLACE FUNCTION fn_set_id()
 RETURNS TRIGGER AS $$
 DECLARE
     next_seq INTEGER;
 BEGIN
     IF TG_OP = 'INSERT' THEN
         -- Em cenários de alta concorrência, considerar SELECT ... FOR UPDATE.
-        SELECT COALESCE(MAX(numero_divisao_no_grupo), 0) + 1 INTO next_seq
+        SELECT COALESCE(MAX(id), 0) + 1 INTO next_seq
         FROM ep2_bd2.divisao
         WHERE id_grupo = NEW.id_grupo;
         
-        NEW.numero_divisao_no_grupo := next_seq; -- Preenche a coluna correta
+        NEW.id := next_seq; -- Preenche a coluna correta
     END IF;
     RETURN NEW;
 END;
@@ -127,6 +127,6 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER trg_before_insert_divisao_set_seq_num
 BEFORE INSERT ON ep2_bd2.divisao
 FOR EACH ROW
-WHEN (NEW.numero_divisao_no_grupo IS NULL) -- Condição baseada na coluna correta
-EXECUTE FUNCTION fn_set_numero_divisao_no_grupo();
+WHEN (NEW.id IS NULL) -- Condição baseada na coluna correta
+EXECUTE FUNCTION fn_set_id();
 
