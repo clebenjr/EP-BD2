@@ -42,4 +42,12 @@ Cadastrar Conflito
 
 
   <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+
+  <script>
+    function redirecionarGrupoArmado(select) {
+      if (select.value === "adicionar_grupo") {
+        window.location.href = "{{ url_for('cadastrar_divisao') }}";
+      }
+    }
+  </script>
   {% endblock %}
