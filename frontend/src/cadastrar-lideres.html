@@ -4,7 +4,8 @@ Cadastrar Conflito
 {% endblock %}
 
 {% block main %}
-<div class="form-group escolher-cadastro">
+<form action="/cadastrar/lideres" method="post" id="form-cadastrar-lideres">
+  <div class="form-group escolher-cadastro">
     <label for="tipo">Adicionar:</label>
     <select id="tipo" onchange="redirecionarCadastro()">
         <option value="chefe">Chefe Militar</option>
@@ -17,7 +18,7 @@ Cadastrar Conflito
 
   <div class="form-group">
     <label for="nome">Nome:*</label>
-    <input type="text" id="nome" placeholder="Digite o nome do líder político" />
+    <input type="text" id="nome" name="nome" placeholder="Digite o nome do líder político" />
   </div>
 
   <div class="form-group">
@@ -31,9 +32,10 @@ Cadastrar Conflito
   </div>
 
   <div class="form-group">
-    <label for="feridos">Descrição de apoio:*</label>
-    <input type="text" id="feridos" placeholder="Escreva uma descrição de apoio" />
+    <label for="descricao_apoio">Descrição de apoio:*</label>
+    <input type="text" id="decricao_apoio" name="descricao_apoio" placeholder="Escreva uma descrição de apoio" />
   </div>
 
   <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+</form>
   {% endblock %}

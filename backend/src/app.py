@@ -75,10 +75,9 @@ def cadastrar_grupos():
 @app.route('/cadastrar/lideres', methods=['GET', 'POST'])
 def cadastrar_lideres():
     if request.method == 'POST':
-        # Aqui você pode processar os dados do formulário
-        # Por exemplo, salvar no banco de dados
-        pass
-    # Renderiza o template para cadastrar um conflito
+        print("Cadastrando líder")
+        bd.cadastrar_lider(request.form['nome'], request.form['id_grupo'], request.form['descricao_apoio'])
+        return "Funcionou"
     else:
         nomes_grupos = bd.busca_nomes_grupos()
         return render_template('cadastrar-lideres.html', nomes_grupos=nomes_grupos)

@@ -156,6 +156,11 @@ class Banco:
         self.conn.commit()
         return "Divisão cadastrada com sucesso"
     
+    def cadastrar_lider(self, nome, id_grupo, descricao_apoio):
+        self.cur.execute("INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES (%s, %s, %s)", (nome, id_grupo, descricao_apoio))
+        self.conn.commit()
+        return "Líder cadastrado com sucesso"
+    
     def close(self):
         self.cur.close()
         self.conn.close()
