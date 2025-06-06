@@ -65,15 +65,23 @@ def cadastrar_divisao():
 def cadastrar_chefe():
     if request.method == 'POST':
         print("Cadastrando chefe militar")
-        lider_value = request.form['nome_lider']
-        nome_lider_politico, nome_grupo_lider_value = lider_value.split('|')
-        id_grupo_lider = bd.buscar_id_grupo_armado(request.form['nome_grupo_lider_value'])
-        divisao_value = request.form['id_divisao']
-        numero_divisao, nome_grupo = divisao_value.split('|')
-        id_grupo_divisao_que_comanda = bd.buscar_id_grupo_armado(nome_grupo)
-        bd.cadastrar_chefe_militar(request.form['faixas'], request.form['nome_lider_politico'], request.form['id_grupo_lider'], request.form['numero_divisao'], request.form['id_grupo_divisao_que_comanda'])
+        # Recebe e separa os valores do líder
+        lider_value = request.form['nome_lider']  # nome do campo no HTML
+        nome_lider_politico, nome_grupo_lider = lider_value.split('|')
+        id_grupo_lider = bd.buscar_id_grupo_armado(nome_grupo_lider)
+
+        # Recebe e separa os valores da divisão
+        divisao_value = request.form['id_divisao']  # nome do campo no HTML
+        id_divisao, nome_grupo_divisao = divisao_value.split('|')
+        id_grupo_divisao_que_comanda = bd.buscar_id_grupo_armado(nome_grupo_divisao)
+        bd.cadastrar_chefe_militar(
+            request.form['faixas'],
+            nome_lider_politico,
+            id_grupo_lider,
+            id_divisao,
+            id_grupo_divisao_que_comanda
+        )
         return "Funcionou"
-    # Renderiza o template para cadastrar um conflito
     else:
         nomes_divisoes = bd.buscar_nomes_divisoes()
         lideres_e_grupos = bd.buscar_lider_e_grupo()

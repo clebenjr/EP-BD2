@@ -194,7 +194,7 @@ class Banco:
         self.cur.execute("""insert into chefe_militar 
                          (faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) 
                          values (%s, %s, %s, %s, %s)""", 
-                         (self, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao))
+                         (faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao))
         self.conn.commit()
         return "Chefe militar cadastrado com sucesso"
     
@@ -219,7 +219,7 @@ class Banco:
         return "Etnia cadastrada com sucesso"
 
     def buscar_id_grupo_armado(self, nome_grupo):
-        self.cur.execute("SELECT id FROM grupo_armado WHERE nome = %s", (nome_grupo))
+        self.cur.execute("SELECT id FROM grupo_armado WHERE nome = %s", (nome_grupo,))
         row = self.cur.fetchone()
         if row:
             return row
