@@ -57,25 +57,20 @@ function filtrarInputSomenteNumeros(campo) {
   }
 }
 
-const idsNumeros = [
-  "id_grupo_lider",
-  "divisao_comandada",
-  "id_grupo_armado_divisao",
-  "mortos",
-  "feridos",
-  "barcos",
-  "homens",
-  "tanques",
-  "avioes",
-  "baixas"
-];
-
-idsNumeros.forEach(id => {
-  const element = document.getElementById(id);
-  if (element) {
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('input[type="number"]').forEach(element => {
     element.addEventListener('input', function () {
-      filtrarInputSomenteNumeros(this);
+      const valorAntigo = this.value;
+      const posCursor = this.selectionStart;
+      const valorFiltrado = valorAntigo.replace(/[^0-9]/g, '');
+
+      if (valorAntigo !== valorFiltrado) {
+        this.value = valorFiltrado;
+        // Ajusta o cursor para a posição correta após remoção do caractere inválido
+        const novaPos = posCursor - (valorAntigo.length - valorFiltrado.length);
+        this.setSelectionRange(novaPos, novaPos);
+      }
     });
-  }
+  });
 });
 
