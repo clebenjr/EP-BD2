@@ -175,9 +175,10 @@ class Banco:
         return "Líder cadastrado com sucesso"
     
     def cadastrar_conflito(self, nome, mortos, feridos):
-        self.cur.execute("INSERT INTO conflito (nome, numero_de_mortos, numero_de_feridos) VALUES (%s, %s, %s)", (nome, mortos, feridos))
+        self.cur.execute("INSERT INTO conflito (nome, numero_de_mortos, numero_de_feridos) VALUES (%s, %s, %s) RETURNING id", (nome, mortos, feridos))
+        conflito_id = self.cur.fetchone()[0]
         self.conn.commit()
-        return "Conflito cadastrado com sucesso"
+        return conflito_id
     
     def buscar_lider_e_grupo(self):
         self.cur.execute("""
@@ -196,6 +197,26 @@ class Banco:
                          (self, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao))
         self.conn.commit()
         return "Chefe militar cadastrado com sucesso"
+    
+    def cadastrar_materia_prima(self, nome, id_conflito):
+        self.cur.execute("INSERT INTO materias_primas_conflito (materia_prima, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
+        self.conn.commit()
+        return "Matéria-prima cadastrada com sucesso"
+    
+    def cadastrar_regiao(self, nome, id_conflito):
+        self.cur.execute("INSERT INTO regioes_conflito (regiao, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
+        self.conn.commit()
+        return "Região cadastrada com sucesso"
+    
+    def cadastrar_religiao(self, nome, id_conflito):
+        self.cur.execute("INSERT INTO religioes_conflito (religiao, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
+        self.conn.commit()
+        return "Religião cadastrada com sucesso"
+    
+    def cadastrar_etnia(self, nome, id_conflito):
+        self.cur.execute("INSERT INTO etnias_conflito (etnia, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
+        self.conn.commit()
+        return "Etnia cadastrada com sucesso"
 
 
     def close(self):

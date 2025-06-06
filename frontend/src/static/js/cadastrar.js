@@ -1,27 +1,19 @@
 function adicionarTipo() {
-  const contador = document.getElementById('contador');
   const opcoesDiv = document.getElementById('tipo-conflito-opcoes');
   const novoCampo = document.createElement('div');
   novoCampo.innerHTML = `
   <div class="campo-tipo-conflito">
-      <select class="tipo-conflito">
+      <select name="tipo" class="tipo-conflito">
           <option value="materia-prima">Matéria Prima</option>
           <option value="regiao">Região</option>
           <option value="religiao">Religião</option>
           <option value="etnia">Etnia</option>
       </select>
-      <input type="text" class="descricao-conflito" placeholder="Nome do Conflito" /> 
+      <input type="text" name="conflitos" class="descricao-conflito" placeholder="Nome do Conflito" /> 
       <button type="button" class="remover-tipo" onclick="removerElem(this)"><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/trash.png" alt="trash"/>Remover</button>
   </div>
   `;
   opcoesDiv.appendChild(novoCampo);
-  contador.innerHTML = parseInt(contador.innerHTML) + 1;
-}
-
-function removerElem(elem) {
-  elem.parentElement.remove();
-  const contador = document.getElementById('contador');
-  contador.innerHTML = parseInt(contador.innerHTML) - 1;
 }
 
 function adicionarConflito() {
