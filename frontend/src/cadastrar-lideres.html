@@ -21,8 +21,13 @@ Cadastrar Conflito
   </div>
 
   <div class="form-group">
-    <label for="mortos">ID do Grupo Armado:*</label>
-    <input type="number" id="mortos" placeholder="Digite o id do grupo armado" />
+    <label for="id-grupo-armado">Escolher Grupo Armado*:</label>
+    <select id="id-grupo-armado" name="id_grupo" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
+      {% for nome in nomes_grupos %}
+      <option value="{{ nome[0] }}">{{ nome[1] }}</option>
+      {% endfor %}
+      <option value="adicionar_grupo">&#x2795; Adicionar Grupo Armado</option>
+    </select>
   </div>
 
   <div class="form-group">
