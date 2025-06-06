@@ -50,9 +50,15 @@ def cadastrar_divisao():
 @app.route('/cadastrar/chefe', methods=['GET', 'POST'])
 def cadastrar_chefe():
     if request.method == 'POST':
-        # Aqui você pode processar os dados do formulário
-        # Por exemplo, salvar no banco de dados
-        pass
+        print("Cadastrando chefe militar")
+        lider_value = request.form['nome_lider']
+        nome_lider_politico, nome_grupo_lider_value = lider_value.split('|')
+        id_grupo_lider = bd.buscar_id_grupo_armado(request.form['nome_grupo_lider_value'])
+        divisao_value = request.form['id_divisao']
+        numero_divisao, nome_grupo = divisao_value.split('|')
+        id_grupo_divisao_que_comanda = bd.buscar_id_grupo_armado(nome_grupo)
+        bd.cadastrar_chefe_militar(request.form['faixas'], request.form['nome_lider_politico'], request.form['id_grupo_lider'], request.form['numero_divisao'], request.form['id_grupo_divisao_que_comanda'])
+        return "Funcionou"
     # Renderiza o template para cadastrar um conflito
     else:
         nomes_divisoes = bd.buscar_nomes_divisoes()

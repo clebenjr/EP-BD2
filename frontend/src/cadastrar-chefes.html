@@ -18,9 +18,9 @@ Cadastrar Conflito
 
   <div class="form-group">
     <label for="id-divisao">Escolher Líder que comanda*:</label>
-    <select id="id-divisao" name="id_divisao" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
+    <select id="id-divisao" name="nome_lider" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
       {% for lider in lideres_e_grupos %}
-      <option value="{{ lider[0] }} {{ lider[1] }}">{{ lider[0] }}, {{ lider[1] }}</option>
+      <option value="{{ lider[0] }}|{{ lider[1] }}">{{ lider[0] }}, {{ lider[1] }}</option>
       {% endfor %}
       <option value="adicionar_grupo">&#x2795; Adicionar Líder</option>
     </select>
@@ -28,21 +28,21 @@ Cadastrar Conflito
 
   <div class="form-group">
     <label for="faixas">Faixa Hierárquica:*</label>
-    <input type="text" id="faixas" placeholder="Digite a faixa hierárquica: tenente, general etc..." />
+    <input type="text" id="faixas" name="faixas" placeholder="Digite a faixa hierárquica: tenente, general etc..." />
   </div>
 
   <div class="form-group">
     <label for="id-divisao">Escolher Divisão que comanda*:</label>
     <select id="id-divisao" name="id_divisao" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
       {% for nome in nomes_divisoes %}
-      <option value="{{ nome[1] }} {{ nome[0] }}"> Divisão {{ nome[1] }} do grupo {{ nome[0] }}</option>
+      <option value="{{ nome[1] }}|{{ nome[0] }}"> Divisão {{ nome[1] }} do grupo {{ nome[0] }}</option>
       {% endfor %}
       <option value="adicionar_grupo">&#x2795; Adicionar Divisão</option>
     </select>
   </div>
 
 
-  <button type="submit" class="submit-btn" onclick="adicionarChefe()">Adicionar Conflito</button>
+  <button type="submit" class="submit-btn" onclick="adicionarChefe()">Adicionar Chefe</button>
 </form>
 
   <script>

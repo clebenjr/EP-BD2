@@ -197,6 +197,11 @@ class Banco:
         self.conn.commit()
         return "Chefe militar cadastrado com sucesso"
 
+    def buscar_id_grupo_armado(self, nome_grupo):
+        self.cur.execute("SELECT id FROM grupo_armado WHERE nome = %s", (nome_grupo))
+        row = self.cur.fetchone()
+        if row:
+            return row
 
     def close(self):
         self.cur.close()
