@@ -174,6 +174,11 @@ class Banco:
         self.conn.commit()
         return "Líder cadastrado com sucesso"
     
+    def cadastrar_conflito(self, nome, mortos, feridos):
+        self.cur.execute("INSERT INTO conflito (nome, numero_de_mortos, numero_de_feridos) VALUES (%s, %s, %s)", (nome, mortos, feridos))
+        self.conn.commit()
+        return "Conflito cadastrado com sucesso"
+    
     def buscar_lider_e_grupo(self):
         self.cur.execute("""
                          select lp.nome as NomeLider, ga.nome as NomeGrupo

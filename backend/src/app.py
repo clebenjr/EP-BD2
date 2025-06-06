@@ -27,10 +27,9 @@ def index():
 @app.route('/cadastrar/conflito', methods=['GET', 'POST'])
 def cadastrar_conflito():
     if request.method == 'POST':
-        # Aqui você pode processar os dados do formulário
-        # Por exemplo, salvar no banco de dados
-        pass
-    # Renderiza o template para cadastrar um conflito
+        print("Cadastrando conflito")
+        bd.cadastrar_conflito(request.form['nome'], request.form['mortos'], request.form['feridos'])
+        return "Funcionou"
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-conflito.html')
