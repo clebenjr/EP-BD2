@@ -4,6 +4,7 @@ Cadastrar Divisão
 {% endblock %}
 
 {% block main %}
+<form action="/cadastrar/divisao" method="post" id="form-cadastrar-divisao">
 <div class="form-group escolher-cadastro">
     <label for="tipo">Adicionar:</label>
     <select id="tipo" onchange="redirecionarCadastro()">
@@ -16,40 +17,41 @@ Cadastrar Divisão
   </div>
 
   <div class="form-group">
-    <label for="tipo">Escolher Grupo Armado*:</label>
-    <select id="tipo" class="chaves-select">
+    <label for="id-grupo-armado">Escolher Grupo Armado*:</label>
+    <select id="id-grupo-armado" name="id_grupo" class="chaves-select">
       {% for nome in nomes_grupos %}
       <option value="{{ nome[0] }}">{{ nome[1] }}</option>
       {% endfor %}
-      <option value="adicionar_grupo">&#x2795; Adicionar Grupo Armado</option>
+      <option value="adicionar_grupo"><a href="{{ url_for('cadastrar_grupos') }}">&#x2795; Adicionar Grupo Armado</a></option>
     </select>
   </div>
 
   <div class="form-group">
     <label for="barcos">Barcos:*</label>
-    <input type="number" id="barcos" placeholder="Digite o número de barcos" />
+    <input type="number" id="barcos" name="barcos" placeholder="Digite o número de barcos" />
   </div>
 
   <div class="form-group">
     <label for="homens">Homens:*</label>
-    <input type="number" id="homens" placeholder="Digite o número de homens" />
+    <input type="number" id="homens" name="homens" placeholder="Digite o número de homens" />
   </div>
 
   <div class="form-group">
     <label for="tanques">Tanques:*</label>
-    <input type="number" id="tanques" placeholder="Digite o número de tanques" />
+    <input type="number" id="tanques" name="tanques" placeholder="Digite o número de tanques" />
   </div>
 
   <div class="form-group">
     <label for="avioes">Aviões:*</label>
-    <input type="number" id="avioes" placeholder="Digite o número de aviões" />
+    <input type="number" id="avioes" name="avioes" placeholder="Digite o número de aviões" />
   </div>
 
   <div class="form-group">
     <label for="baixas">Baixas:*</label>
-    <input type="number" id="baixas" placeholder="Digite o número de baixas" />
+    <input type="number" id="baixas" name="baixas" placeholder="Digite o número de baixas" />
   </div>
 
-  <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+  <button type="submit" class="submit-btn" onclick="adicionarConflito()">Adicionar Divisão</button>
+</form>
 
-  {% endblock %}
+{% endblock %}

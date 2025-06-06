@@ -39,10 +39,10 @@ def cadastrar_conflito():
 @app.route('/cadastrar/divisao', methods=['GET', 'POST'])
 def cadastrar_divisao():
     if request.method == 'POST':
-        # Aqui você pode processar os dados do formulário
-        # Por exemplo, salvar no banco de dados
-        pass
-    # Renderiza o template para cadastrar um conflito
+        print(request.form['barcos'])
+        print("Adicionando divisão")
+        bd.cadastrar_divisao(request.form['id_grupo'], request.form['barcos'], request.form['homens'], request.form['tanques'], request.form['avioes'], request.form['baixas'])
+        return "Funcionou"
     else:
         nomes_grupos = bd.busca_nomes_grupos()
         return render_template('cadastrar-divisao.html', nomes_grupos=nomes_grupos)
@@ -61,7 +61,7 @@ def cadastrar_chefe():
 
 
 @app.route('/cadastrar/grupos', methods=['GET', 'POST'])
-def cadastrar_grupos_militares():
+def cadastrar_grupos():
     if request.method == 'POST':
         print(request.form['nome'])
         print("Adicionando grupo militar")

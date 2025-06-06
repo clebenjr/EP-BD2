@@ -17,7 +17,7 @@ function adicionarTipo() {
 }
 
 function adicionarConflito() {
-  const nome = document.getElementById("nome").value;
+/*   const nome = document.getElementById("nome").value;
   const mortos = document.getElementById("mortos").value;
   const feridos = document.getElementById("feridos").value;
 
@@ -26,7 +26,7 @@ function adicionarConflito() {
     return;
   }
 
-  alert(`Conflito "${nome}" adicionado com sucesso!`);
+  alert(`Conflito "${nome}" adicionado com sucesso!`); */
 }
 
 
