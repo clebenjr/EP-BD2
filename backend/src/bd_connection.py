@@ -166,6 +166,16 @@ class Banco:
         self.conn.commit()
         return "Líder cadastrado com sucesso"
     
+    def buscar_lider_e_grupo(self):
+        self.cur.execute("""
+                         select lp.nome as NomeLider, ga.nome as NomeGrupo
+                         from lider_politico lp
+                         join grupo_armado ga on lp.id_grupo = ga.id
+                         order by ga.nome, lp.nome;
+                         """)
+        rows = self.cur.fetchall()
+        return rows
+    
     def close(self):
         self.cur.close()
         self.conn.close()
