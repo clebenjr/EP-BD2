@@ -18,11 +18,11 @@ Cadastrar Divisão
 
   <div class="form-group">
     <label for="id-grupo-armado">Escolher Grupo Armado*:</label>
-    <select id="id-grupo-armado" name="id_grupo" class="chaves-select">
+    <select id="id-grupo-armado" name="id_grupo" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
       {% for nome in nomes_grupos %}
       <option value="{{ nome[0] }}">{{ nome[1] }}</option>
       {% endfor %}
-      <option value="adicionar_grupo"><a href="{{ url_for('cadastrar_grupos') }}">&#x2795; Adicionar Grupo Armado</a></option>
+      <option value="adicionar_grupo">&#x2795; Adicionar Grupo Armado</option>
     </select>
   </div>
 
@@ -53,5 +53,13 @@ Cadastrar Divisão
 
   <button type="submit" class="submit-btn" onclick="adicionarConflito()">Adicionar Divisão</button>
 </form>
+
+<script>
+  function redirecionarGrupoArmado(select) {
+    if (select.value === "adicionar_grupo") {
+      window.location.href = "{{ url_for('cadastrar_grupos') }}";
+    }
+  }
+</script>
 
 {% endblock %}
