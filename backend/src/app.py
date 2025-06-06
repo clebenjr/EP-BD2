@@ -56,8 +56,8 @@ def cadastrar_chefe():
         pass
     # Renderiza o template para cadastrar um conflito
     else:
-        # Aqui você pode carregar dados necessários para o formulário, se necessário
-        return render_template('cadastrar-chefes.html')
+        nomes_divisoes = bd.buscar_nomes_divisoes()
+        return render_template('cadastrar-chefes.html', nomes_divisoes=nomes_divisoes)
 
 
 @app.route('/cadastrar/grupos', methods=['GET', 'POST'])
