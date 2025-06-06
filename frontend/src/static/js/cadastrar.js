@@ -35,3 +35,23 @@ function redirecionarCadastro() {
   // Redireciona para a rota correspondente
   window.location.href = `/cadastrar/${tipo}`;
 }
+
+const idsTexto = ["nome", "nome_lider", "faixas"];
+idsTexto.forEach (id => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.addEventListener('input', function() {
+      this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    });
+  }
+});
+
+const idsNumeros = ["mortos", "feridos", "barcos", "divisao", "avioes", "homens", "tanques", "baixas"];
+idsNumeros.forEach (id => { 
+  const element = document.getElementById(id);
+  if (element) {
+    element.addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+  }
+});
