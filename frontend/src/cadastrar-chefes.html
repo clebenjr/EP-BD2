@@ -16,13 +16,13 @@ Cadastrar Conflito
   </div>
 
   <div class="form-group">
-    <label for="nome_lider">Nome do Líder Político ao qual ele obedece(PK da outra tabela):*</label>
-    <input type="text" id="nome_lider" placeholder="Digite o nome do líder" />
-  </div>
-
-  <div class="form-group">
-    <label for="id_grupo_lider">ID do Grupo do Líder Político:*</label>
-    <input type="text" id="id_grupo_lider" placeholder="Digite o ID do grupo" />
+    <label for="id-divisao">Escolher Líder que comanda*:</label>
+    <select id="id-divisao" name="id_divisao" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
+      {% for lider in lideres_e_grupos %}
+      <option value="{{ lider[0] }} {{ lider[1] }}">{{ lider[0] }}, {{ lider[1] }}</option>
+      {% endfor %}
+      <option value="adicionar_grupo">&#x2795; Adicionar Líder</option>
+    </select>
   </div>
 
   <div class="form-group">
