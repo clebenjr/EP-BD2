@@ -146,6 +146,11 @@ class Banco:
         self.conn.commit()
         return "Funcionou"
     
+    def busca_nomes_grupos(self):
+        self.cur.execute("SELECT id, nome FROM grupo_armado ORDER BY id;")
+        rows = self.cur.fetchall()
+        return rows
+    
     def close(self):
         self.cur.close()
         self.conn.close()

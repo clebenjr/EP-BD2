@@ -16,8 +16,13 @@ Cadastrar Divisão
   </div>
 
   <div class="form-group">
-    <label for="grupo_armado">Escolher Grupo Armado (PK da outra tabela):*</label>
-    <input type="number" id="grupo_armado" placeholder="Digite o id do grupo armado" />
+    <label for="tipo">Escolher Grupo Armado*:</label>
+    <select id="tipo" class="chaves-select">
+      {% for nome in nomes_grupos %}
+      <option value="{{ nome[0] }}">{{ nome[1] }}</option>
+      {% endfor %}
+      <option value="adicionar_grupo">&#x2795; Adicionar Grupo Armado</option>
+    </select>
   </div>
 
   <div class="form-group">

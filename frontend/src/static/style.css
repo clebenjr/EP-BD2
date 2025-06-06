@@ -218,3 +218,8 @@ span {
     font: var(--body1);
     cursor: pointer;
 }
+
+.chaves-select {
+    width: 100%;
+    font: var(--body2);
+}
