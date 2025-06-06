@@ -34,7 +34,7 @@ Cadastrar Conflito
     <label for="id-divisao">Escolher Divisão que comanda*:</label>
     <select id="id-divisao" name="id_divisao" class="chaves-select" onchange="redirecionarGrupoArmado(this)">
       {% for nome in nomes_divisoes %}
-      <option value="{{ nome[1] }} {{ nome[0] }}">{{ nome[0] }}, {{ nome[1] }}</option>
+      <option value="{{ nome[1] }} {{ nome[0] }}"> Divisão {{ nome[1] }} do grupo {{ nome[0] }}</option>
       {% endfor %}
       <option value="adicionar_grupo">&#x2795; Adicionar Divisão</option>
     </select>
