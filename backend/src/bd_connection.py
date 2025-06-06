@@ -184,6 +184,15 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    def cadastrar_chefe_militar(self, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao):
+        self.cur.execute("""insert into chefe_militar 
+                         (faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) 
+                         values (%s, %s, %s, %s, %s)""", 
+                         (self, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao))
+        self.conn.commit()
+        return "Chefe militar cadastrado com sucesso"
+
+
     def close(self):
         self.cur.close()
         self.conn.close()

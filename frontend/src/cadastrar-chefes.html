@@ -4,6 +4,7 @@ Cadastrar Conflito
 {% endblock %}
 
 {% block main %}
+<form action="/cadastrar/chefe" method="post" id="form-cadastrar-chefe">
 <div class="form-group escolher-cadastro">
     <label for="tipo">Adicionar:</label>
     <select id="tipo" onchange="redirecionarCadastro()">
@@ -41,7 +42,8 @@ Cadastrar Conflito
   </div>
 
 
-  <button class="submit-btn" onclick="adicionarConflito()">Adicionar Conflito</button>
+  <button type="submit" class="submit-btn" onclick="adicionarChefe()">Adicionar Conflito</button>
+</form>
 
   <script>
     function redirecionarGrupoArmado(select) {
