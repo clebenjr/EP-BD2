@@ -46,7 +46,7 @@ function filtrarInputSomenteNumeros(campo) {
     campo.value = valorFiltrado;
     const novaPos = Math.min(posCursor - 1, valorFiltrado.length);
     campo.setSelectionRange(novaPos, novaPos);
-  }
+  } 
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -57,12 +57,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const valorFiltrado = valorAntigo.replace(/[^0-9]/g, '');
 
       if (valorAntigo !== valorFiltrado) {
-        this.value = valorFiltrado;
-        // Ajusta o cursor para a posição correta após remoção do caractere inválido
-        const novaPos = posCursor - (valorAntigo.length - valorFiltrado.length);
-        this.setSelectionRange(novaPos, novaPos);
+        // Use setTimeout para garantir atualização do valor e do cursor
+        setTimeout(() => {
+          this.value = valorFiltrado;
+          const novaPos = posCursor - (valorAntigo.length - valorFiltrado.length);
+          this.setSelectionRange(novaPos, novaPos);
+        }, 0);
       }
     });
   });
 });
-
