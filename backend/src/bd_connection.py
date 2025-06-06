@@ -151,6 +151,11 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    def busca_nomes_lideres(self):
+        self.cur.execute("select nome, id_grupo from lider_politico order by nome, id_grupo;")
+        rows = self.cur.fetchall()
+        return rows
+    
     def cadastrar_divisao(self, id_grupo, barcos, homens=0, tanques=0, avioes=0, baixas=0):
         self.cur.execute("INSERT INTO divisao (id_grupo, barcos, homens, tanques, avioes, baixas) VALUES (%s, %s, %s, %s, %s, %s)", (id_grupo, barcos, homens, tanques, avioes, baixas))
         self.conn.commit()
