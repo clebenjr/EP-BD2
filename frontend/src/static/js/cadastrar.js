@@ -36,22 +36,38 @@ function redirecionarCadastro() {
   window.location.href = `/cadastrar/${tipo}`;
 }
 
-const idsTexto = ["nome", "nome_lider", "faixas"];
-idsTexto.forEach (id => {
+function filtrarInputSomenteNumeros(campo) {
+  const valorAntigo = campo.value;
+  const posCursor = campo.selectionStart;
+
+  const valorFiltrado = valorAntigo.replace(/[^0-9]/g, "");
+
+  if (valorAntigo !== valorFiltrado) {
+    campo.value = valorFiltrado;
+    const novaPos = Math.min(posCursor - 1, valorFiltrado.length);
+    campo.setSelectionRange(novaPos, novaPos);
+  }
+}
+
+const idsNumeros = [
+  "id_grupo_lider",
+  "divisao_comandada",
+  "id_grupo_armado_divisao",
+  "mortos",
+  "feridos",
+  "barcos",
+  "homens",
+  "tanques",
+  "avioes",
+  "baixas"
+];
+
+idsNumeros.forEach(id => {
   const element = document.getElementById(id);
   if (element) {
-    element.addEventListener('input', function() {
-      this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    element.addEventListener('input', function () {
+      filtrarInputSomenteNumeros(this);
     });
   }
 });
 
-const idsNumeros = ["mortos", "feridos", "barcos", "divisao", "avioes", "homens", "tanques", "baixas"];
-idsNumeros.forEach (id => { 
-  const element = document.getElementById(id);
-  if (element) {
-    element.addEventListener('input', function() {
-      this.value = this.value.replace(/[^0-9]/g, '');
-    });
-  }
-});
