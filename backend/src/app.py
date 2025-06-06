@@ -28,7 +28,21 @@ def index():
 def cadastrar_conflito():
     if request.method == 'POST':
         print("Cadastrando conflito")
-        bd.cadastrar_conflito(request.form['nome'], request.form['mortos'], request.form['feridos'])
+        print(request.form.getlist('tipo'))
+        id_conflito = bd.cadastrar_conflito(request.form['nome'], request.form['mortos'], request.form['feridos'])
+
+        tipos = request.form.getlist('tipo')
+        descricoes = request.form.getlist('conflitos')
+        for tipo, descricao in zip(tipos, descricoes):
+            # Suponha que você tenha 4 tabelas diferentes:
+            if tipo == 'materia-prima':
+                bd.cadastrar_materia_prima(descricao, id_conflito)
+            elif tipo == 'regiao':
+                bd.cadastrar_regiao(descricao, id_conflito)
+            elif tipo == 'religiao':
+                bd.cadastrar_religiao(descricao, id_conflito)
+            elif tipo == 'etnia':
+                bd.cadastrar_etnia(descricao, id_conflito)
         return "Funcionou"
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
