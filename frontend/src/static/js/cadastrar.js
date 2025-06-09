@@ -16,23 +16,8 @@ function adicionarTipo() {
   opcoesDiv.appendChild(novoCampo);
 }
 
-function adicionarConflito() {
-/*   const nome = document.getElementById("nome").value;
-  const mortos = document.getElementById("mortos").value;
-  const feridos = document.getElementById("feridos").value;
-
-  if (!nome || !mortos || !feridos) {
-    alert("Por favor, preencha todos os campos obrigatórios.");
-    return;
-  }
-
-  alert(`Conflito "${nome}" adicionado com sucesso!`); */
-}
-
-
 function redirecionarCadastro() {
   const tipo = document.getElementById('tipo').value;
-  // Redireciona para a rota correspondente
   window.location.href = `/cadastrar/${tipo}`;
 }
 
@@ -57,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const valorFiltrado = valorAntigo.replace(/[^0-9]/g, '');
 
       if (valorAntigo !== valorFiltrado) {
-        // Use setTimeout para garantir atualização do valor e do cursor
         setTimeout(() => {
           this.value = valorFiltrado;
           const novaPos = posCursor - (valorAntigo.length - valorFiltrado.length);

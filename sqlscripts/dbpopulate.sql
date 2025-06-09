@@ -1,7 +1,6 @@
--- Define o schema a ser utilizado
+
 SET search_path TO ep2_bd2;
 
--- Povoando a tabela pais
 INSERT INTO pais (nome) VALUES
 ('Brasil'), ('Angola'), ('Portugal'), ('Moçambique'), ('Cabo Verde'),
 ('Guiné-Bissau'), ('São Tomé e Príncipe'), ('Timor-Leste'), ('Ucrânia'), ('Rússia'),
@@ -11,8 +10,6 @@ INSERT INTO pais (nome) VALUES
 ('Alemanha'), ('Polônia'), ('Sérvia'), ('China'), ('Índia'),
 ('Geórgia'), ('Armênia'), ('Japão'), ('República de Azânia'), ('Bielorrússia'), ('Noruega');
 
--- Povoando a tabela conflito
--- IDs de 1 a 25
 INSERT INTO conflito (numero_de_mortos, numero_de_feridos, nome) VALUES
 (150000, 300000, 'Guerra Civil da Nortúmbria'),
 (75000, 150000, 'Conflito da Fronteira Escarlate'),
@@ -40,7 +37,6 @@ INSERT INTO conflito (numero_de_mortos, numero_de_feridos, nome) VALUES
 (15000, 35000, 'Crise de Estabilidade em Volhynia'), 
 (45000, 95000, 'Disputa de Recursos no Ártico'); 
 
--- Povoando a tabela afeta
 INSERT INTO afeta (nome_pais, id_conflito) VALUES
 ('Ucrânia', 1), ('Rússia', 1), ('Palestina', 1), 
 ('Sudão', 2), ('Etiópia', 2),
@@ -60,7 +56,6 @@ INSERT INTO afeta (nome_pais, id_conflito) VALUES
 ('Polônia', 24), ('Ucrânia', 24), ('Bielorrússia', 24),
 ('Rússia', 25), ('Canadá', 25), ('Estados Unidos', 25), ('Noruega', 25);
 
--- Povoando tabelas de causas de conflitos (GARANTINDO PELO MENOS UMA CAUSA POR CONFLITO)
 INSERT INTO regioes_conflito (id_conflito, regiao) VALUES
 (1, 'Norte da Ucrânia'), (1, 'Oeste da Rússia'), 
 (4, 'Kosovo'), (4, 'Bósnia'),                 
@@ -97,7 +92,6 @@ INSERT INTO etnias_conflito (id_conflito, etnia) VALUES
 (23, 'Azanianos Nativos'), (23, 'Colonizadores (Exemplo)'); 
 
 
--- Povoando a tabela grupo_armado com total_baixas calculado
 INSERT INTO grupo_armado (nome, total_baixas) VALUES
 ('Exército de Libertação Nacional', 450),      
 ('Forças Rebeldes Unidas', 500),               
@@ -125,36 +119,34 @@ INSERT INTO grupo_armado (nome, total_baixas) VALUES
 ('Lobos do Ártico', 400),                     
 ('Milícia da Fronteira Mexicana', 250);        
 
--- Povoando a tabela divisao (IDs sequenciais DENTRO de cada grupo)
-INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALUES
-(1, 1, 5, 2000, 50, 5, 300),    -- Grupo 1, Divisão 1
-(2, 1, 0, 1500, 30, 2, 150),    -- Grupo 1, Divisão 2
-(1, 2, 10, 3000, 70, 10, 500),   -- Grupo 2, Divisão 1
-(1, 3, 2, 1000, 20, 0, 100),    -- Grupo 3, Divisão 1
-(1, 4, 0, 2500, 60, 8, 400),    -- Grupo 4, Divisão 1
-(1, 5, 15, 5000, 100, 15, 800),   -- Grupo 5, Divisão 1
-(1, 6, 1, 800, 10, 1, 50),     -- Grupo 6, Divisão 1
-(1, 7, 0, 1200, 25, 3, 200),    -- Grupo 7, Divisão 1
-(1, 8, 8, 2200, 45, 7, 350),    -- Grupo 8, Divisão 1
-(1, 9, 3, 1800, 35, 4, 250),    -- Grupo 9, Divisão 1
-(1, 10, 0, 3500, 80, 12, 600),   -- Grupo 10, Divisão 1
-(1, 11, 20, 4000, 90, 20, 700),   -- Grupo 11, Divisão 1
-(1, 12, 4, 1600, 28, 6, 180),   -- Grupo 12, Divisão 1
-(1, 13, 0, 2800, 55, 9, 450),   -- Grupo 13, Divisão 1
-(1, 14, 6, 2000, 40, 5, 320),   -- Grupo 14, Divisão 1
-(1, 15, 12, 3200, 75, 11, 550),  -- Grupo 15, Divisão 1
-(1, 16, 0, 1300, 15, 0, 120),   -- Grupo 16, Divisão 1
-(1, 17, 7, 2700, 58, 8, 420),   -- Grupo 17, Divisão 1
-(1, 18, 2, 900, 18, 2, 90),    -- Grupo 18, Divisão 1
-(1, 19, 5, 1700, 33, 3, 280),   -- Grupo 19, Divisão 1
--- Grupo 20 não tem divisões neste script
-(1, 21, 30, 10000, 200, 50, 1200), -- Grupo 21, Divisão 1
-(1, 22, 50, 15000, 300, 70, 1500), -- Grupo 22, Divisão 1
-(1, 23, 10, 8000, 150, 30, 900),  -- Grupo 23, Divisão 1
-(1, 24, 5, 3000, 80, 10, 400),   -- Grupo 24, Divisão 1
-(1, 25, 0, 2000, 40, 0, 250);    -- Grupo 25, Divisão 1
 
--- Povoando a tabela lider_politico
+INSERT INTO divisao (id, id_grupo, barcos, homens, tanques, avioes, baixas) VALUES
+(1, 1, 5, 2000, 50, 5, 300),   
+(2, 1, 0, 1500, 30, 2, 150),    
+(1, 2, 10, 3000, 70, 10, 500),   
+(1, 3, 2, 1000, 20, 0, 100),    
+(1, 4, 0, 2500, 60, 8, 400),    
+(1, 5, 15, 5000, 100, 15, 800),   
+(1, 6, 1, 800, 10, 1, 50),     
+(1, 7, 0, 1200, 25, 3, 200),    
+(1, 8, 8, 2200, 45, 7, 350),    
+(1, 9, 3, 1800, 35, 4, 250),    
+(1, 10, 0, 3500, 80, 12, 600),   
+(1, 11, 20, 4000, 90, 20, 700),   
+(1, 12, 4, 1600, 28, 6, 180),   
+(1, 13, 0, 2800, 55, 9, 450),   
+(1, 14, 6, 2000, 40, 5, 320),   
+(1, 15, 12, 3200, 75, 11, 550),  
+(1, 16, 0, 1300, 15, 0, 120),   
+(1, 17, 7, 2700, 58, 8, 420),   -
+(1, 18, 2, 900, 18, 2, 90),    
+(1, 19, 5, 1700, 33, 3, 280),   
+(1, 21, 30, 10000, 200, 50, 1200), 
+(1, 22, 50, 15000, 300, 70, 1500), 
+(1, 23, 10, 8000, 150, 30, 900),  
+(1, 24, 5, 3000, 80, 10, 400),   
+(1, 25, 0, 2000, 40, 0, 250);    
+
 INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
 ('Alistair Vance', 1, 'Apoio popular e veteranos de guerra'), ('Sofia Rostova', 2, 'Apoio de dissidentes e intelectuais'),
 ('Kaelen', 3, 'Apoio de milícias locais e agricultores'), ('Lyra Moon', 4, 'Apoio de comerciantes e guardas fronteiriços'),
@@ -169,35 +161,34 @@ INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES
 ('Jean-Luc Picard', 21, 'Conselho da Federação Europeia'), ('James Kirk', 22, 'Congresso dos Estados Unidos'),
 ('Li Shang', 23, 'Comitê Central Asiático'), ('Sven Olafson', 24, 'Parlamento Nórdico Unificado'), ('Maria Sanchez', 25, 'Assembleia da Fronteira');
 
--- Povoando a tabela chefe_militar (referenciando os novos IDs de divisão)
-INSERT INTO chefe_militar (id, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) VALUES
-(DEFAULT, 'General de Brigada', 'Alistair Vance', 1, 1, 1),      -- Comanda Divisão 1 do Grupo 1
-(DEFAULT, 'Coronel', 'Sofia Rostova', 2, 1, 2),                -- Comanda Divisão 1 do Grupo 2
-(DEFAULT, 'Major-General', 'Kaelen', 3, 1, 3),                  -- Comanda Divisão 1 do Grupo 3
-(DEFAULT, 'Capitão', 'Lyra Moon', 4, 1, 4),                      -- Comanda Divisão 1 do Grupo 4
-(DEFAULT, 'Tenente-Coronel', 'Ivan Petrov', 5, 1, 5),            -- Comanda Divisão 1 do Grupo 5
-(DEFAULT, 'General de Divisão', 'Anya Sharma', 6, 1, 6),          -- Comanda Divisão 1 do Grupo 6
-(DEFAULT, 'Sargento-Mor', 'Omar Al-Jamil', 7, 1, 7),             -- Comanda Divisão 1 do Grupo 7
-(DEFAULT, 'Major', 'Rex Nebula', 8, 1, 8),                      -- Comanda Divisão 1 do Grupo 8
-(DEFAULT, 'Coronel Pleno', 'Elena Petrova', 9, 1, 9),            -- Comanda Divisão 1 do Grupo 9
-(DEFAULT, 'General', 'Kai Manu', 10, 1, 10),                     -- Comanda Divisão 1 do Grupo 10
-(DEFAULT, 'Comandante', 'Jian Li', 11, 1, 11),                   -- Comanda Divisão 1 do Grupo 11
-(DEFAULT, 'Almirante', 'Marcus Tiberius', 12, 1, 12),             -- Comanda Divisão 1 do Grupo 12
-(DEFAULT, 'Tenente', 'Aisha Bello', 13, 1, 13),                   -- Comanda Divisão 1 do Grupo 13
-(DEFAULT, 'Brigadeiro', 'Zara Khan', 14, 1, 14),                 -- Comanda Divisão 1 do Grupo 14
-(DEFAULT, 'Capitão de Fragata', 'Viktor Orlov', 15, 1, 15),       -- Comanda Divisão 1 do Grupo 15
-(DEFAULT, 'Marechal de Campo', 'Miguel Silva', 16, 1, 16),        -- Comanda Divisão 1 do Grupo 16
-(DEFAULT, 'Cabo Mestre', '"Sombra"', 17, 1, 17),                  -- Comanda Divisão 1 do Grupo 17
-(DEFAULT, 'General de Exército', 'Urso Cinzento', 18, 1, 18),     -- Comanda Divisão 1 do Grupo 18
-(DEFAULT, 'Aspirante-a-Oficial', 'Nzinga II', 19, 1, 19),         -- Comanda Divisão 1 do Grupo 19
-(DEFAULT, 'Comodoro', 'O Oráculo', 20, 1, 19),                   -- Chefe do Oráculo (Grupo 20) comanda Divisão 1 do Grupo 19
-(DEFAULT, 'Marechal Europeu', 'Jean-Luc Picard', 21, 1, 21),     -- Comanda Divisão 1 do Grupo 21
-(DEFAULT, 'General 5 Estrelas', 'James Kirk', 22, 1, 22),       -- Comanda Divisão 1 do Grupo 22
-(DEFAULT, 'Grande Estrategista', 'Li Shang', 23, 1, 23),          -- Comanda Divisão 1 do Grupo 23
-(DEFAULT, 'Comandante Nórdico', 'Sven Olafson', 24, 1, 24),       -- Comanda Divisão 1 do Grupo 24
-(DEFAULT, 'Jefe de Plaza', 'Maria Sanchez', 25, 1, 25);          -- Comanda Divisão 1 do Grupo 25
 
--- Povoando a tabela participa_grupo
+INSERT INTO chefe_militar (id, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) VALUES
+(DEFAULT, 'General de Brigada', 'Alistair Vance', 1, 1, 1),      
+(DEFAULT, 'Coronel', 'Sofia Rostova', 2, 1, 2),
+(DEFAULT, 'Major-General', 'Kaelen', 3, 1, 3),
+(DEFAULT, 'Capitão', 'Lyra Moon', 4, 1, 4),
+(DEFAULT, 'Tenente-Coronel', 'Ivan Petrov', 5, 1, 5), 
+(DEFAULT, 'General de Divisão', 'Anya Sharma', 6, 1, 6),
+(DEFAULT, 'Sargento-Mor', 'Omar Al-Jamil', 7, 1, 7),
+(DEFAULT, 'Major', 'Rex Nebula', 8, 1, 8),
+(DEFAULT, 'Coronel Pleno', 'Elena Petrova', 9, 1, 9),
+(DEFAULT, 'General', 'Kai Manu', 10, 1, 10),
+(DEFAULT, 'Comandante', 'Jian Li', 11, 1, 11),
+(DEFAULT, 'Almirante', 'Marcus Tiberius', 12, 1, 12),
+(DEFAULT, 'Tenente', 'Aisha Bello', 13, 1, 13), 
+(DEFAULT, 'Brigadeiro', 'Zara Khan', 14, 1, 14),
+(DEFAULT, 'Capitão de Fragata', 'Viktor Orlov', 15, 1, 15), 
+(DEFAULT, 'Marechal de Campo', 'Miguel Silva', 16, 1, 16), 
+(DEFAULT, 'Cabo Mestre', '"Sombra"', 17, 1, 17),
+(DEFAULT, 'General de Exército', 'Urso Cinzento', 18, 1, 18),
+(DEFAULT, 'Aspirante-a-Oficial', 'Nzinga II', 19, 1, 19), 
+(DEFAULT, 'Comodoro', 'O Oráculo', 20, 1, 19),
+(DEFAULT, 'Marechal Europeu', 'Jean-Luc Picard', 21, 1, 21), 
+(DEFAULT, 'General 5 Estrelas', 'James Kirk', 22, 1, 22),
+(DEFAULT, 'Grande Estrategista', 'Li Shang', 23, 1, 23),
+(DEFAULT, 'Comandante Nórdico', 'Sven Olafson', 24, 1, 24),
+(DEFAULT, 'Jefe de Plaza', 'Maria Sanchez', 25, 1, 25);          
+
 INSERT INTO participa_grupo (id_conflito, id_grupo, data_de_incorporacao, data_de_saida) VALUES
 (1, 1, '2022-02-24', NULL), (1, 2, '2022-03-01', NULL), (1, 5, '2022-04-10', '2023-01-20'),
 (4, 21, '2023-01-01', NULL), (4, 5, '2023-02-01', NULL),
@@ -206,7 +197,6 @@ INSERT INTO participa_grupo (id_conflito, id_grupo, data_de_incorporacao, data_d
 (23, 22, '2024-06-01', NULL), (23, 21, '2024-06-05', NULL),
 (25, 22, '2026-01-01', NULL), (25, 24, '2026-01-01', NULL), (25, 1, '2026-02-01', NULL);
 
--- Povoando a tabela arma
 INSERT INTO arma (tipo, capacidade_destrutiva) VALUES
 ('Fuzil de Assalto AKM', 7), ('Pistola Makarov PM', 4), ('Granada F1', 7),
 ('Morteiro 2B14 Podnos', 9), ('RPG-7', 8), ('Metralhadora PKM', 8),
@@ -217,7 +207,6 @@ INSERT INTO arma (tipo, capacidade_destrutiva) VALUES
 ('Lança-Granadas AGS-17', 9), ('Míssil Terra-Ar S-300', 10),
 ('Barret M82', 8), ('M200 Intervention', 8), ('Fuzil M16', 7), ('Caça F-35', 10), ('Tanque M1 Abrams', 9);
 
--- Povoando a tabela traficante
 INSERT INTO traficante (nome) VALUES
 ('Viktor Bout'), ('Monzer al-Kassar'), ('Adnan Khashoggi'), ('Semyon Mogilevich'),
 ('Rafael Caro Quintero'), ('Joaquín "El Chapo" Guzmán'), ('Khun Sa'), ('Pablo Escobar'),
@@ -226,7 +215,6 @@ INSERT INTO traficante (nome) VALUES
 ('Ricardo "O Fantasma" Silva'), ('Beatriz "A Viúva Negra" Oliveira'), ('Tiago "O Negociador" Pereira'), ('Sofia "A Serpente" Lima'),
 ('John Doe Arms LLC'), ('EuroArms Corp');
 
--- Povoando a tabela possui_arma_traficante
 INSERT INTO possui_arma_traficante (tipo_arma, nome_traficante, quantidade_disponivel) VALUES
 ('Fuzil de Assalto AKM', 'Viktor Bout', 5000), ('Pistola Makarov PM', 'Monzer al-Kassar', 2000),
 ('Granada F1', 'Adnan Khashoggi', 10000), ('Barret M82', 'Viktor Bout', 150),
@@ -236,8 +224,6 @@ INSERT INTO possui_arma_traficante (tipo_arma, nome_traficante, quantidade_dispo
 ('Barret M82', 'Artur "O Rei" Almeida', 50), 
 ('M200 Intervention', 'Sofia "A Serpente" Lima', 30);
 
-
--- Povoando a tabela fornece_arma_grupo (Total acumulado, quantidade > 0)
 INSERT INTO fornece_arma_grupo (id_grupo_armado, tipo_arma, nome_traficante, quantidade_fornecida) VALUES
 (1, 'Fuzil de Assalto AKM', 'Viktor Bout', 1500), 
 (2, 'Pistola Makarov PM', 'Monzer al-Kassar', 500),
@@ -251,8 +237,6 @@ INSERT INTO fornece_arma_grupo (id_grupo_armado, tipo_arma, nome_traficante, qua
 (15, 'M200 Intervention', 'Sofia "A Serpente" Lima', 5), 
 (7, 'M200 Intervention', 'Semyon Mogilevich', 12);
 
-
--- Povoando a tabela organizacao_mediadora
 INSERT INTO organizacao_mediadora (id, nome, tipo) VALUES
 (DEFAULT, 'Organização das Nações Unidas (ONU)', 'Internacional'),
 (DEFAULT, 'Comitê Internacional da Cruz Vermelha (CICV)', 'Internacional'),
@@ -271,12 +255,10 @@ INSERT INTO organizacao_mediadora (id, nome, tipo) VALUES
 (DEFAULT, 'Departamento de Estado dos EUA', 'Governamental'),
 (DEFAULT, 'Alto Comissariado das Nações Unidas para os Refugiados (ACNUR)', 'Internacional');
 
--- Povoando a tabela depende_organizacao
 INSERT INTO depende_organizacao (id_organizacao_mediada, id_organizacao_mediadora) VALUES
 (6, 1), (7, 1), (2,1), (3,2), (4,1), (16,1), 
 (8, 14), (11, 15), (12, 8);
 
--- Povoando a tabela participa_organizacao
 INSERT INTO participa_organizacao (id_conflito, id_organizacao, data_incorporacao, data_saida, tipo_ajuda, numero_pessoas) VALUES
 (1, 1, '2022-03-01', NULL, 'Diplomática', 50), (1, 2, '2022-02-28', NULL, 'Médica', 200),
 (4, 8, '2023-01-15', NULL, 'Diplomática', 40), (4, 14, '2023-02-01', NULL, 'Presencial', 100),
@@ -284,7 +266,6 @@ INSERT INTO participa_organizacao (id_conflito, id_organizacao, data_incorporaca
 (22, 1, '2025-01-10', NULL, 'Diplomática', 30),
 (23, 15, '2024-06-10', NULL, 'Diplomática', 20), (23, 1, '2024-06-15', NULL, 'Presencial', 15);
 
--- Povoando a tabela dialoga
 INSERT INTO dialoga (id_organizacao, nome_lider_politico, id_grupo_lider_politico) VALUES
 (1, 'Alistair Vance', 1), (2, 'Sofia Rostova', 2),
 (8, 'Jean-Luc Picard', 21), (14, 'James Kirk', 22),

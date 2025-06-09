@@ -1,7 +1,6 @@
--- Define o schema a ser utilizado (se necessário em cada sessão/script)
+
 SET search_path TO ep2_bd2;
 
--- 1. Gerar um gráfico, histograma, por tipo de conflito e número de conflitos.
 SELECT
     'Por Região' AS TipoDeConflito,
     COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
@@ -33,11 +32,10 @@ FROM
     etnias_conflito;
 
 Fornecimento de Barret M82 ou M200 Intervention Traficantes 
--- 2. Listar os traficantes e os grupos armados (Nome) para os quais os traficantes fornecem armas “Barret M82” ou “M200 intervention”.
 SELECT DISTINCT
     t.nome AS NomeTraficante,
     ga.nome AS NomeGrupoArmado,
-    a.tipo AS TipoArma -- Coluna adicionada para mostrar o nome da arma
+    a.tipo AS TipoArma 
 FROM
     traficante t
 JOIN
@@ -50,7 +48,6 @@ WHERE
     a.tipo = 'Barret M82' OR a.tipo = 'M200 Intervention';
 
 
--- 3. Listar os 5 maiores conflitos em número de mortos.
 SELECT
     nome,
     numero_de_mortos
@@ -61,13 +58,10 @@ ORDER BY
 LIMIT 5;
 
 
--- 4. Listar as 5 maiores organizações em número de mediações.
--- (Considerando que "mediação" é uma participação da organização em um conflito)
+
 SELECT
     OM.nome AS NomeOrganizacao,
-    COUNT(DISTINCT PO.id_conflito) AS NumeroDeMediacoes -- Conta conflitos distintos mediados
-    -- Se quiser contar cada entrada em participa_organizacao como uma "mediação":
-    -- COUNT(*) AS NumeroDeParticipacoesEmMediacao
+    COUNT(DISTINCT PO.id_conflito) AS NumeroDeMediacoes
 FROM
     participa_organizacao PO
 INNER JOIN
@@ -79,7 +73,6 @@ ORDER BY
 LIMIT 5;
 
 
--- 5. Listar os 5 maiores grupos armados com maior número de armas fornecidas.
 SELECT
     GA.nome AS NomeGrupoArmado,
     SUM(FAG.quantidade_fornecida) AS TotalArmasFornecidas
@@ -94,7 +87,6 @@ ORDER BY
 LIMIT 5;
 
 
--- 6. Listar o país e número de conflitos com maior número de conflitos religiosos.
 SELECT
     A.nome_pais,
     COUNT(DISTINCT RC.id_conflito) AS NumeroDeConflitosReligiosos
@@ -108,7 +100,7 @@ ORDER BY
     NumeroDeConflitosReligiosos DESC
 LIMIT 1;
 
--- 7. Listar todos os conflitos, os países envolvidos e os detalhes de cada tipo de causa.
+
 SELECT
     c.nome AS NomeConflito,
     c.numero_de_mortos,

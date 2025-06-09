@@ -1,13 +1,11 @@
--- Criação do schema
+
 CREATE SCHEMA IF NOT EXISTS ep2_bd2;
 SET search_path TO ep2_bd2;
 
--- Tabela de países
 CREATE TABLE pais (
     nome VARCHAR(255) PRIMARY KEY
 );
 
--- Tabela de conflitos
 CREATE TABLE conflito (
     id SERIAL PRIMARY KEY,
     numero_de_mortos INTEGER NOT NULL CHECK (numero_de_mortos >= 0),
@@ -15,7 +13,6 @@ CREATE TABLE conflito (
     nome VARCHAR(255) NOT NULL
 );
 
--- Conflitos afetando países (relação N:M)
 CREATE TABLE afeta (
     nome_pais VARCHAR(255) NOT NULL,
     id_conflito INTEGER NOT NULL,
@@ -24,7 +21,6 @@ CREATE TABLE afeta (
     FOREIGN KEY (id_conflito) REFERENCES conflito(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Causas dos conflitos: Territoriais
 CREATE TABLE regioes_conflito (
     id_conflito INTEGER NOT NULL,
     regiao VARCHAR(255) NOT NULL,
@@ -32,7 +28,6 @@ CREATE TABLE regioes_conflito (
     FOREIGN KEY (id_conflito) REFERENCES conflito(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Causas dos conflitos: Econômicos
 CREATE TABLE materias_primas_conflito (
     id_conflito INTEGER NOT NULL,
     materia_prima VARCHAR(255) NOT NULL,
@@ -40,7 +35,6 @@ CREATE TABLE materias_primas_conflito (
     FOREIGN KEY (id_conflito) REFERENCES conflito(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Causas dos conflitos: Religiosos
 CREATE TABLE religioes_conflito (
     id_conflito INTEGER NOT NULL,
     religiao VARCHAR(255) NOT NULL,
@@ -48,7 +42,6 @@ CREATE TABLE religioes_conflito (
     FOREIGN KEY (id_conflito) REFERENCES conflito(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Causas dos conflitos: Raciais
 CREATE TABLE etnias_conflito (
     id_conflito INTEGER NOT NULL,
     etnia VARCHAR(255) NOT NULL,
@@ -56,18 +49,16 @@ CREATE TABLE etnias_conflito (
     FOREIGN KEY (id_conflito) REFERENCES conflito(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Grupos armados
+
 CREATE TABLE grupo_armado (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL UNIQUE,
     total_baixas INTEGER NOT NULL DEFAULT 0 CHECK (total_baixas >= 0) -- Coluna adicionada
 );
 
--- Divisões dos grupos armados
 CREATE TABLE divisao (
     id INTEGER NOT NULL,
     id_grupo INTEGER NOT NULL,
-    -- numero_divisao_no_grupo INTEGER, -- Campo opcional para numeração dentro do grupo
     barcos INTEGER NOT NULL DEFAULT 0 CHECK (barcos >= 0),
     homens INTEGER NOT NULL DEFAULT 0 CHECK (homens >= 0),
     tanques INTEGER NOT NULL DEFAULT 0 CHECK (tanques >= 0),
@@ -77,7 +68,6 @@ CREATE TABLE divisao (
     PRIMARY KEY(id, id_grupo)
 );
 
--- Líderes políticos
 CREATE TABLE lider_politico (
     nome VARCHAR(255) NOT NULL,
     id_grupo INTEGER NOT NULL,
@@ -86,7 +76,6 @@ CREATE TABLE lider_politico (
     FOREIGN KEY (id_grupo) REFERENCES grupo_armado(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Chefes militares
 CREATE TABLE chefe_militar (
     id SERIAL PRIMARY KEY,
     faixa_hierarquica VARCHAR(255) NOT NULL,
@@ -98,7 +87,6 @@ CREATE TABLE chefe_militar (
     FOREIGN KEY (id_divisao, id_grupo_armado_divisao) REFERENCES divisao(id, id_grupo) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
--- Participação dos grupos nos conflitos
 CREATE TABLE participa_grupo (
     id_conflito INTEGER NOT NULL,
     id_grupo INTEGER NOT NULL,
@@ -110,18 +98,15 @@ CREATE TABLE participa_grupo (
     CHECK (data_de_saida IS NULL OR data_de_saida >= data_de_incorporacao)
 );
 
--- Armas
 CREATE TABLE arma (
     tipo VARCHAR(255) PRIMARY KEY,
     capacidade_destrutiva INTEGER NOT NULL CHECK (capacidade_destrutiva >= 0 AND capacidade_destrutiva <= 10) 
 );
 
--- Traficantes
 CREATE TABLE traficante (
     nome VARCHAR(255) PRIMARY KEY
 );
 
--- Relação: Traficante possui tipos de armas (estoque potencial)
 CREATE TABLE possui_arma_traficante ( 
     tipo_arma VARCHAR(255),
     nome_traficante VARCHAR(255),
@@ -131,7 +116,6 @@ CREATE TABLE possui_arma_traficante (
     FOREIGN KEY (nome_traficante) REFERENCES traficante(nome) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Relação: Traficante fornece armas a Grupo Armado
 CREATE TABLE fornece_arma_grupo ( 
     id_grupo_armado INTEGER,
     tipo_arma VARCHAR(255),
@@ -143,14 +127,12 @@ CREATE TABLE fornece_arma_grupo (
     FOREIGN KEY (nome_traficante) REFERENCES traficante(nome) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- Organizações mediadoras
 CREATE TABLE organizacao_mediadora (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     tipo VARCHAR(30) NOT NULL CHECK (tipo IN ('Governamental', 'Não Governamental', 'Internacional'))
 );
 
--- Dependências entre organizações
 CREATE TABLE depende_organizacao (
     id_organizacao_mediada INTEGER NOT NULL,
     id_organizacao_mediadora INTEGER NOT NULL,
@@ -159,7 +141,6 @@ CREATE TABLE depende_organizacao (
     FOREIGN KEY (id_organizacao_mediadora) REFERENCES organizacao_mediadora(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Participação das organizações nos conflitos
 CREATE TABLE participa_organizacao (
     id_conflito INTEGER NOT NULL,
     id_organizacao INTEGER NOT NULL,
@@ -173,7 +154,6 @@ CREATE TABLE participa_organizacao (
     CHECK (data_saida IS NULL OR data_saida >= data_incorporacao)
 );
 
--- Diálogo entre líderes políticos e organizações mediadoras
 CREATE TABLE dialoga (
     id_organizacao INTEGER NOT NULL,
     nome_lider_politico VARCHAR(255) NOT NULL,

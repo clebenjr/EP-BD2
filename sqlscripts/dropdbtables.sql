@@ -1,5 +1,3 @@
--- Define o schema a ser utilizado (se o schema não for o padrão da sessão)
--- SET search_path TO ep2_bd2;
 
 DROP TABLE IF EXISTS 
     ep2_bd2.afeta,
@@ -24,9 +22,3 @@ DROP TABLE IF EXISTS
     ep2_bd2.traficante
 CASCADE;
 
--- Nota: Se você tiver outras tabelas ou objetos no schema ep2_bd2 que não foram
--- mencionados no script de criação fornecido, eles não serão incluídos neste DROP.
--- Este comando assume que as tabelas listadas são todas as que você deseja remover do schema ep2_bd2.
--- O uso de "ep2_bd2." antes de cada nome de tabela garante que você está excluindo
--- as tabelas do schema correto, caso seu search_path não esteja configurado ou
--- você queira ser explícito.

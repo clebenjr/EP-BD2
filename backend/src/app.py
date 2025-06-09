@@ -37,7 +37,6 @@ def cadastrar_conflito():
         tipos = request.form.getlist('tipo')
         descricoes = request.form.getlist('conflitos')
         for tipo, descricao in zip(tipos, descricoes):
-            # Suponha que você tenha 4 tabelas diferentes:
             if tipo == 'materia-prima':
                 res = bd.cadastrar_materia_prima(descricao, id_conflito)
             elif tipo == 'regiao':
@@ -51,7 +50,6 @@ def cadastrar_conflito():
         flash("Formulário enviado com sucesso!", "success")
         return redirect(url_for('cadastrar_divisao'))
     else:
-        # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-conflito.html')
 
 
@@ -74,13 +72,11 @@ def cadastrar_divisao():
 def cadastrar_chefe():
     if request.method == 'POST':
         print("Cadastrando chefe militar")
-        # Recebe e separa os valores do líder
-        lider_value = request.form['nome_lider']  # nome do campo no HTML
+        lider_value = request.form['nome_lider']
         nome_lider_politico, nome_grupo_lider = lider_value.split('|')
         id_grupo_lider = bd.buscar_id_grupo_armado(nome_grupo_lider)
 
-        # Recebe e separa os valores da divisão
-        divisao_value = request.form['id_divisao']  # nome do campo no HTML
+        divisao_value = request.form['id_divisao'] 
         id_divisao, nome_grupo_divisao = divisao_value.split('|')
         id_grupo_divisao_que_comanda = bd.buscar_id_grupo_armado(nome_grupo_divisao)
         res = bd.cadastrar_chefe_militar(
@@ -110,7 +106,6 @@ def cadastrar_grupos():
         flash("Formulário enviado com sucesso!", "success")
         return redirect(url_for('cadastrar_grupos'))
     else:
-        # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-grupos.html')
     
 
