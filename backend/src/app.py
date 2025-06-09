@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, render_template, request
 from bd_connection import Banco
 from pathlib import Path
+import os
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / 'frontend' / 'src'
 
 app = Flask(__name__, template_folder=FRONTEND_DIR, static_folder=FRONTEND_DIR / 'static')
+app.secret_key = os.getenv('SECRET_KEY')
 bd = Banco()
 
 @app.route('/')
