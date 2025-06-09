@@ -223,3 +223,38 @@ span {
     width: 100%;
     font: var(--body2);
 }
+
+.alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* centraliza */
+    z-index: 9999;
+    padding: 1rem 2rem;
+    text-align: center;
+    border-radius: 10px;
+    min-width: 250px;
+    background-color: #d4edda; /* cor de fundo do alerta */
+    color: #155724;           /* cor do texto */
+    border: 1px solid #c3e6cb;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    font: var(--body0);
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font: var(--body2);
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font: var(--body2);
+}

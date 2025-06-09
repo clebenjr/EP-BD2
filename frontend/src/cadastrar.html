@@ -20,6 +20,18 @@
   <main class="form-container">
     {% block main %}
     {% endblock %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+            <button onclick="this.parentElement.style.display='none'">Fechar</button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
   </main>
 
   <script src="{{url_for('static', filename='js/cadastrar.js')}}"></script>

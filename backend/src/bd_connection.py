@@ -2,6 +2,9 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from flask import flash
+
+
 
 class Banco:
     def __init__(self):
@@ -20,7 +23,25 @@ class Banco:
         self.cur = self.conn.cursor()
 
         self.cur.execute("SET search_path TO ep2_bd2;")  
-        
+    
+    @staticmethod
+    def error_handler(f):
+        def wrapper(self, *args, **kwargs):
+            try:
+                return f(self, *args, **kwargs)
+            except psycopg2.Error as e:
+                print(f"Database error: {e}")
+                flash("Ocorreu um erro ao acessar o banco de dados. Por favor, tente novamente mais tarde.", "error")
+                self.conn.rollback()
+                self.cur.execute("SET search_path TO ep2_bd2;")  
+                return None
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                flash("Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.", "error")
+                self.conn.rollback()
+                self.cur.execute("SET search_path TO ep2_bd2;")  
+                return None
+        return wrapper
 
     
     def busca_grafico(self):
@@ -164,6 +185,7 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    @error_handler
     def cadastrar_divisao(self, id_grupo, barcos, homens=0, tanques=0, avioes=0, baixas=0):
         self.cur.execute("INSERT INTO divisao (id_grupo, barcos, homens, tanques, avioes, baixas) VALUES (%s, %s, %s, %s, %s, %s)", (id_grupo, barcos, homens, tanques, avioes, baixas))
         self.conn.commit()

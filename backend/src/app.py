@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from bd_connection import Banco
 from pathlib import Path
 import os
@@ -56,8 +56,11 @@ def cadastrar_divisao():
     if request.method == 'POST':
         print(request.form['barcos'])
         print("Adicionando divisão")
-        bd.cadastrar_divisao(request.form['id_grupo'], request.form['barcos'], request.form['homens'], request.form['tanques'], request.form['avioes'], request.form['baixas'])
-        return "Funcionou"
+        res = bd.cadastrar_divisao(request.form['id_grupo'], request.form['barcos'], request.form['homens'], request.form['tanques'], request.form['avioes'], request.form['baixas'])
+        if res is None:
+            return redirect(url_for('cadastrar_divisao'))
+        flash("Formulário enviado com sucesso!", "success")
+        return redirect(url_for('cadastrar_divisao'))
     else:
         nomes_grupos = bd.busca_nomes_grupos()
         return render_template('cadastrar-divisao.html', nomes_grupos=nomes_grupos)
