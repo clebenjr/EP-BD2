@@ -47,9 +47,9 @@ def cadastrar_conflito():
             elif tipo == 'etnia':
                 res = bd.cadastrar_etnia(descricao, id_conflito)
         if res is None:
-            return redirect(url_for('cadastrar_divisao'))
+            return redirect(url_for('cadastrar_conflito'))
         flash("Formulário enviado com sucesso!", "success")
-        return redirect(url_for('cadastrar_divisao'))
+        return redirect(url_for('cadastrar_conflito'))
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-conflito.html')
