@@ -67,3 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+
+function fecharAlerta(elem) {
+  elem.parentElement.style.display='none';
+  document.getElementById('alert-overlay').style.display = 'none';
+}
