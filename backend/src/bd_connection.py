@@ -162,6 +162,7 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    @error_handler
     def cadastrar_grupo(self, nome):
         self.cur.execute("INSERT INTO grupo_armado (nome) VALUES (%s)", (nome,))
         self.conn.commit()
@@ -191,11 +192,13 @@ class Banco:
         self.conn.commit()
         return "Divisão cadastrada com sucesso"
     
+    @error_handler
     def cadastrar_lider(self, nome, id_grupo, descricao_apoio):
         self.cur.execute("INSERT INTO lider_politico (nome, id_grupo, descricao_apoio) VALUES (%s, %s, %s)", (nome, id_grupo, descricao_apoio))
         self.conn.commit()
         return "Líder cadastrado com sucesso"
     
+    @error_handler
     def cadastrar_conflito(self, nome, mortos, feridos):
         self.cur.execute("INSERT INTO conflito (nome, numero_de_mortos, numero_de_feridos) VALUES (%s, %s, %s) RETURNING id", (nome, mortos, feridos))
         conflito_id = self.cur.fetchone()[0]
@@ -212,6 +215,7 @@ class Banco:
         rows = self.cur.fetchall()
         return rows
     
+    @error_handler
     def cadastrar_chefe_militar(self, faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao):
         self.cur.execute("""insert into chefe_militar 
                          (faixa_hierarquica, nome_lider_politico, id_grupo_lider_politico, id_divisao, id_grupo_armado_divisao) 
@@ -220,21 +224,25 @@ class Banco:
         self.conn.commit()
         return "Chefe militar cadastrado com sucesso"
     
+    @error_handler
     def cadastrar_materia_prima(self, nome, id_conflito):
         self.cur.execute("INSERT INTO materias_primas_conflito (materia_prima, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
         self.conn.commit()
         return "Matéria-prima cadastrada com sucesso"
     
+    @error_handler
     def cadastrar_regiao(self, nome, id_conflito):
         self.cur.execute("INSERT INTO regioes_conflito (regiao, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
         self.conn.commit()
         return "Região cadastrada com sucesso"
     
+    @error_handler
     def cadastrar_religiao(self, nome, id_conflito):
         self.cur.execute("INSERT INTO religioes_conflito (religiao, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
         self.conn.commit()
         return "Religião cadastrada com sucesso"
     
+    @error_handler
     def cadastrar_etnia(self, nome, id_conflito):
         self.cur.execute("INSERT INTO etnias_conflito (etnia, id_conflito) VALUES (%s, %s)", (nome, id_conflito))
         self.conn.commit()

@@ -32,20 +32,24 @@ def cadastrar_conflito():
         print("Cadastrando conflito")
         print(request.form.getlist('tipo'))
         id_conflito = bd.cadastrar_conflito(request.form['nome'], request.form['mortos'], request.form['feridos'])
-
+        if id_conflito is None:
+            return redirect(url_for('cadastrar_conflito'))
         tipos = request.form.getlist('tipo')
         descricoes = request.form.getlist('conflitos')
         for tipo, descricao in zip(tipos, descricoes):
             # Suponha que você tenha 4 tabelas diferentes:
             if tipo == 'materia-prima':
-                bd.cadastrar_materia_prima(descricao, id_conflito)
+                res = bd.cadastrar_materia_prima(descricao, id_conflito)
             elif tipo == 'regiao':
-                bd.cadastrar_regiao(descricao, id_conflito)
+                res = bd.cadastrar_regiao(descricao, id_conflito)
             elif tipo == 'religiao':
-                bd.cadastrar_religiao(descricao, id_conflito)
+                res = bd.cadastrar_religiao(descricao, id_conflito)
             elif tipo == 'etnia':
-                bd.cadastrar_etnia(descricao, id_conflito)
-        return "Funcionou"
+                res = bd.cadastrar_etnia(descricao, id_conflito)
+        if res is None:
+            return redirect(url_for('cadastrar_divisao'))
+        flash("Formulário enviado com sucesso!", "success")
+        return redirect(url_for('cadastrar_divisao'))
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-conflito.html')
@@ -79,14 +83,17 @@ def cadastrar_chefe():
         divisao_value = request.form['id_divisao']  # nome do campo no HTML
         id_divisao, nome_grupo_divisao = divisao_value.split('|')
         id_grupo_divisao_que_comanda = bd.buscar_id_grupo_armado(nome_grupo_divisao)
-        bd.cadastrar_chefe_militar(
+        res = bd.cadastrar_chefe_militar(
             request.form['faixas'],
             nome_lider_politico,
             id_grupo_lider,
             id_divisao,
             id_grupo_divisao_que_comanda
         )
-        return "Funcionou"
+        if res is None:
+            return redirect(url_for('cadastrar_chefe'))
+        flash("Formulário enviado com sucesso!", "success")
+        return redirect(url_for('cadastrar_chefe'))
     else:
         nomes_divisoes = bd.buscar_nomes_divisoes()
         lideres_e_grupos = bd.buscar_lider_e_grupo()
@@ -96,10 +103,12 @@ def cadastrar_chefe():
 @app.route('/cadastrar/grupos', methods=['GET', 'POST'])
 def cadastrar_grupos():
     if request.method == 'POST':
-        print(request.form['nome'])
         print("Adicionando grupo militar")
-        bd.cadastrar_grupo(request.form['nome'])
-        return "funcionou"
+        res = bd.cadastrar_grupo(request.form['nome'])
+        if res is None:
+            return redirect(url_for('cadastrar_grupos'))
+        flash("Formulário enviado com sucesso!", "success")
+        return redirect(url_for('cadastrar_grupos'))
     else:
         # Aqui você pode carregar dados necessários para o formulário, se necessário
         return render_template('cadastrar-grupos.html')
@@ -109,8 +118,11 @@ def cadastrar_grupos():
 def cadastrar_lideres():
     if request.method == 'POST':
         print("Cadastrando líder")
-        bd.cadastrar_lider(request.form['nome'], request.form['id_grupo'], request.form['descricao_apoio'])
-        return "Funcionou"
+        res = bd.cadastrar_lider(request.form['nome'], request.form['id_grupo'], request.form['descricao_apoio'])
+        if res is None:
+            return redirect(url_for('cadastrar_lideres'))
+        flash("Formulário enviado com sucesso!", "success")
+        return redirect(url_for('cadastrar_lideres'))
     else:
         nomes_grupos = bd.busca_nomes_grupos()
         return render_template('cadastrar-lideres.html', nomes_grupos=nomes_grupos)
