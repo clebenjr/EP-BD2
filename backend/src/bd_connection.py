@@ -55,7 +55,7 @@ class Banco:
             'Por Matéria Prima' AS TipoDeConflito,
             COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
         FROM
-            Materias_Primas_conflito -- Presumindo que o nome da tabela seja "Materias_Primas" ou similar sem acentos/espaços. Ajuste se necessário.
+            Materias_Primas_conflito
         UNION ALL
         SELECT
             'Por Religião' AS TipoDeConflito,
@@ -77,7 +77,7 @@ class Banco:
                     SELECT DISTINCT
                         t.nome AS NomeTraficante,
                         ga.nome AS NomeGrupoArmado,
-                        a.tipo AS TipoArma -- Coluna adicionada para mostrar o nome da arma
+                        a.tipo AS TipoArma
                     FROM
                         traficante t
                     JOIN
@@ -96,7 +96,7 @@ class Banco:
         self.cur.execute("""
                         SELECT
                             nome,
-                            numero_de_mortos, -- Se o nome da coluna tiver espaços, é preciso usar aspas (ou o delimitador específico do seu SGBD, como colchetes [] ou crases ``)
+                            numero_de_mortos,
                             numero_de_feridos
                         FROM
                             conflito
@@ -118,7 +118,7 @@ class Banco:
                         INNER JOIN
                             organizacao_mediadora OM ON PO.id_organizacao = OM.id
                         GROUP BY
-                            OM.nome, OM.tipo -- ou PO.Id_Organizacao e OM.Nome, mas agrupar pelo nome é suficiente se o nome for único.
+                            OM.nome, OM.tipo
                         ORDER BY
                             NumeroDeMediacoes DESC
                         LIMIT 5;
@@ -136,7 +136,7 @@ class Banco:
                         INNER JOIN
                             grupo_armado GA ON F.id_grupo_armado = GA.id
                         GROUP BY
-                            GA.nome -- ou GA.Id e GA.Nome, mas agrupar pelo nome é suficiente se o nome for único.
+                            GA.nome
                         ORDER BY
                             TotalArmasFornecidas DESC
                         LIMIT 5;
