@@ -1,136 +1,69 @@
-
-SET search_path TO ep2_bd2;
-
-SELECT
-    'Por Região' AS TipoDeConflito,
+-- Consulta do gráfico
+SELECT 'Por Região' AS TipoDeConflito,
     COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
-FROM
-    regioes_conflito
-
+FROM Regioes_conflito
 UNION ALL
-
-SELECT
-    'Por Matéria Prima' AS TipoDeConflito,
+SELECT 'Por Matéria Prima' AS TipoDeConflito,
     COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
-FROM
-    materias_primas_conflito
-
+FROM Materias_Primas_conflito
 UNION ALL
-
-SELECT
-    'Por Religião' AS TipoDeConflito,
+SELECT 'Por Religião' AS TipoDeConflito,
     COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
-FROM
-    religioes_conflito
-
+FROM religioes_conflito
 UNION ALL
-
-SELECT
-    'Por Etnia' AS TipoDeConflito,
+SELECT 'Por Etnia' AS TipoDeConflito,
     COUNT(DISTINCT id_conflito) AS NumeroDeConflitos
-FROM
-    etnias_conflito;
+FROM Etnias_conflito;
 
-Fornecimento de Barret M82 ou M200 Intervention Traficantes 
-SELECT DISTINCT
-    t.nome AS NomeTraficante,
+
+-- Consulta traficantes que fornecem Barret M82 ou M200 Intervention
+SELECT DISTINCT t.nome AS NomeTraficante,
     ga.nome AS NomeGrupoArmado,
-    a.tipo AS TipoArma 
-FROM
-    traficante t
-JOIN
-    fornece_arma_grupo fag ON t.nome = fag.nome_traficante
-JOIN
-    grupo_armado ga ON fag.id_grupo_armado = ga.id
-JOIN
-    arma a ON fag.tipo_arma = a.tipo
-WHERE
-    a.tipo = 'Barret M82' OR a.tipo = 'M200 Intervention';
+    a.tipo AS TipoArma
+FROM traficante t
+    JOIN fornece_arma_grupo fag ON t.nome = fag.nome_traficante
+    JOIN grupo_armado ga ON fag.id_grupo_armado = ga.id
+    JOIN arma a ON fag.tipo_arma = a.tipo
+WHERE a.tipo = 'Barret M82'
+    OR a.tipo = 'M200 Intervention';
 
 
-SELECT
-    nome,
-    numero_de_mortos
-FROM
-    conflito
-ORDER BY
-    numero_de_mortos DESC
+-- Consulta 5 maiores conflitos
+SELECT nome,
+    numero_de_mortos,
+    numero_de_feridos
+FROM conflito
+ORDER BY numero_de_mortos DESC
 LIMIT 5;
 
 
-
-SELECT
-    OM.nome AS NomeOrganizacao,
-    COUNT(DISTINCT PO.id_conflito) AS NumeroDeMediacoes
-FROM
-    participa_organizacao PO
-INNER JOIN
-    organizacao_mediadora OM ON PO.id_organizacao = OM.id
-GROUP BY
-    OM.nome
-ORDER BY
-    NumeroDeMediacoes DESC
+-- Consulta 5 maiores organizações mediadoras
+SELECT OM.nome AS NomeOrganizacao,
+    OM.tipo as Tipo,
+    COUNT(PO.Id_Organizacao) AS NumeroDeMediacoes
+FROM participa_organizacao PO
+    INNER JOIN organizacao_mediadora OM ON PO.id_organizacao = OM.id
+GROUP BY OM.nome,
+    OM.tipo
+ORDER BY NumeroDeMediacoes DESC
 LIMIT 5;
 
 
-SELECT
-    GA.nome AS NomeGrupoArmado,
-    SUM(FAG.quantidade_fornecida) AS TotalArmasFornecidas
-FROM
-    fornece_arma_grupo FAG
-INNER JOIN
-    grupo_armado GA ON FAG.id_grupo_armado = GA.id
-GROUP BY
-    GA.nome
-ORDER BY
-    TotalArmasFornecidas DESC
+-- Consulta 5 maiores grupos armados
+SELECT GA.nome AS NomeGrupoArmado,
+    SUM(F.Quantidade_fornecida) AS TotalArmasFornecidas
+FROM fornece_arma_grupo F
+    INNER JOIN grupo_armado GA ON F.id_grupo_armado = GA.id
+GROUP BY GA.nome
+ORDER BY TotalArmasFornecidas DESC
 LIMIT 5;
 
 
-SELECT
-    A.nome_pais,
-    COUNT(DISTINCT RC.id_conflito) AS NumeroDeConflitosReligiosos
-FROM
-    afeta A
-INNER JOIN
-    religioes_conflito RC ON A.id_conflito = RC.id_conflito
-GROUP BY
-    A.nome_pais
-ORDER BY
-    NumeroDeConflitosReligiosos DESC
+-- Consulta país com maior número de conflitos religiosos
+SELECT A.nome_pais,
+    COUNT(DISTINCT R.id_conflito) AS NumeroDeConflitosReligiosos
+FROM afeta A
+    INNER JOIN religioes_conflito R ON a.id_conflito = R.id_conflito
+GROUP BY A.nome_pais
+ORDER BY NumeroDeConflitosReligiosos DESC
 LIMIT 1;
-
-
-SELECT
-    c.nome AS NomeConflito,
-    c.numero_de_mortos,
-    c.numero_de_feridos,
-    COALESCE(paises.PaisesEnvolvidos, 'Nenhum país diretamente afetado registrado') AS PaisesEnvolvidos,
-    COALESCE(reg.CausasTerritoriais, 'Nenhuma causa territorial registrada') AS CausasTerritoriais,
-    COALESCE(mat.CausasEconomicas, 'Nenhuma causa económica registrada') AS CausasEconomicas,
-    COALESCE(rel.CausasReligiosas, 'Nenhuma causa religiosa registrada') AS CausasReligiosas,
-    COALESCE(etn.CausasEtnicas, 'Nenhuma causa étnica/racial registrada') AS CausasEtnicas
-FROM
-    conflito c
-LEFT JOIN
-    (SELECT id_conflito, STRING_AGG(DISTINCT nome_pais, ', ') AS PaisesEnvolvidos
-     FROM afeta
-     GROUP BY id_conflito) AS paises ON c.id = paises.id_conflito
-LEFT JOIN
-    (SELECT id_conflito, STRING_AGG(DISTINCT regiao, ', ') AS CausasTerritoriais
-     FROM regioes_conflito
-     GROUP BY id_conflito) AS reg ON c.id = reg.id_conflito
-LEFT JOIN
-    (SELECT id_conflito, STRING_AGG(DISTINCT materia_prima, ', ') AS CausasEconomicas
-     FROM materias_primas_conflito
-     GROUP BY id_conflito) AS mat ON c.id = mat.id_conflito
-LEFT JOIN
-    (SELECT id_conflito, STRING_AGG(DISTINCT religiao, ', ') AS CausasReligiosas
-     FROM religioes_conflito
-     GROUP BY id_conflito) AS rel ON c.id = rel.id_conflito
-LEFT JOIN
-    (SELECT id_conflito, STRING_AGG(DISTINCT etnia, ', ') AS CausasEtnicas
-     FROM etnias_conflito
-     GROUP BY id_conflito) AS etn ON c.id = etn.id_conflito
-ORDER BY
-    c.nome;
