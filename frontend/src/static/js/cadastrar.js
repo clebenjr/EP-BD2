@@ -10,7 +10,7 @@ function adicionarTipo() {
           <option value="etnia">Etnia</option>
       </select>
       <input type="text" name="conflitos" class="descricao-conflito" placeholder="Nome do Conflito" /> 
-      <button type="button" class="remover-tipo" onclick="removerElem(this)"><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/trash.png" alt="trash"/>Remover</button>
+      <button type="button" class="remover-tipo" onclick="this.parentElement.remove()"><img width="24" height="24" src="https://img.icons8.com/material-rounded/24/trash.png" alt="trash"/>Remover</button>
   </div>
   `;
   opcoesDiv.appendChild(novoCampo);
