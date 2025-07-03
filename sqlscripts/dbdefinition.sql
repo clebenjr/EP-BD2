@@ -53,7 +53,7 @@ CREATE TABLE etnias_conflito (
 CREATE TABLE grupo_armado (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL UNIQUE,
-    total_baixas INTEGER NOT NULL DEFAULT 0 CHECK (total_baixas >= 0) -- Coluna adicionada
+    total_baixas INTEGER NOT NULL DEFAULT 0 CHECK (total_baixas >= 0)
 );
 
 CREATE TABLE divisao (
